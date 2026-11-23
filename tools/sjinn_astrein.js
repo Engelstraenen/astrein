@@ -7,8 +7,8 @@ SB.btn = t => [...document.querySelectorAll('button,[role=button]')].find(b => (
 SB.click = async (t, w = 700) => { const b = SB.btn(t); if (!b) return false; b.click(); await sleep(w); return true };
 SB.bar = () => [...document.querySelectorAll('button')].map(b => b.innerText.trim()).filter(t => /GPT|Nano|1:1|16:9|9:16|3:4|4:3|auto|1K|2K|4K|Unlimited|credits/.test(t)).join(' | ');
 SB.gen = () => (document.body.innerText.match(/Generating/g) || []).length;
-SB.toasts = () => document.querySelectorAll('.Toastify__toast').length || [...document.querySelectorAll('*')].filter(e => e.children.length === 0 && /maximum limit of 5 concurrent/.test(e.textContent || '')).length;
-SB.closeToasts = async () => { document.querySelectorAll('.Toastify__toast').forEach(t => t.remove()); await sleep(100); };
+SB.toasts = () => [...document.querySelectorAll('.Toastify__toast-body')].filter(e => /maximum limit/.test(e.textContent)).length;
+SB.closeToasts = async () => { document.querySelectorAll('.Toastify__close-button').forEach(b => b.click()); await sleep(600); };
 SB.setRes = async r => { if (!SB.bar().includes(r)) { await SB.click('Resolution'); await SB.click(r + ' resolution'); } };
 SB.setup = async () => {
   if (!/Unlimited · On/.test(SB.bar())) { await SB.click('Unlimited'); const o = [...document.querySelectorAll('*')].find(e => e.children.length === 0 && e.innerText && e.innerText.trim() === 'No credits consumed'); if (o) { o.click(); await sleep(700); } }
