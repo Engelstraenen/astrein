@@ -25,13 +25,18 @@ gh (Engelstraenen), sjinn in Chrome eingeloggt (Unlimited).
 Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kostenlos → Seite bauen → Screenshot-Vergleich → GitHub Pages.
 
 ## 7. Befehle
-(folgt mit dem ersten Code)
+- Vorschau: `python3 tools/serve.py 4397` → http://localhost:4397/ (4381 ist DRSCHIWAGO)
+- Prüfen: `python3 tools/check.py http://localhost:4397/ <ordner> 390x844 stamm:0,einbau:.5` · Handy komplett: `tools/mobil_check.py` (Kapitel-Liste anpassen)
+- Veröffentlichen: `git subtree split --prefix site -b gh-pages && git push -f origin gh-pages` → https://engelstraenen.github.io/astrein/
 
 ## 8. Offene Fragen
-- Wahl Storyboard 1 „Die Nische“, 2 „Die Zinke“, 3 „Vom Stamm zum Tisch“ oder Mix.
+- Mix-Storyboard A (Nische als zweites Film-Kapitel auf der Hauptseite) oder B (Nische als Unterseite „Einbau nach Maß“) – Bilder in konzepte/, sobald sjinn frei ist.
 
 ## 9. Entschieden
 - 23.11.2026: Name ASTREIN (Annahme), Storyboards TSB-1/2/3 in konzepte/ (Prompts konzepte/prompts.md).
+
+- 23.11.2026 (Eugen): Hauptlayout = 3 „Vom Stamm zum Tisch“, dazu die Nische aus 1 als eigener Unterpunkt („beides gemixt“).
+- 23.11.2026: Seitengerüst gebaut (Vanilla, statisch): Stamm-Film → Holzlabor → Einbau-Film (Laser-Aufmaß) → Anfrage (Foto/Maße/Rückruf 24 h) → Karriere-Film + Kinetik → Bewerbung 60 s → Bewertungen (Beispiel) → Footer. Repo github.com/Engelstraenen/astrein, Pages gh-pages.
 
 ## 10. Ablage
 Code: Dropbox/CLAUDE/Projekte/ASTREIN · Storyboards: konzepte/
