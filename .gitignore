@@ -1,0 +1,9 @@
+.env*
+node_modules/
+.DS_Store
+assets-roh/
+konzepte/*.png
+*.mov
+vorschau/
+konzepte/*.jpg
+!konzepte/vorschau/
