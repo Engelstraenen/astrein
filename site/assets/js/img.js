@@ -14,6 +14,10 @@ window.IMG = {
  "asf4": {
   "d": "assets/img/asf4.webp",
   "m": "assets/img/asf4-m.webp"
+ },
+ "f2-nische": {
+  "d": "assets/img/f2-nische.webp",
+  "m": "assets/img/f2-nische-m.webp"
  }
 };
 window.VID = {};
