@@ -82,19 +82,21 @@ h3{font-size:clamp(26px,2.4vw,34px)}
 .karriere .btn.big.on{opacity:1;transform:none}
 
 /* Holzlabor */
-.holzlabor{background:var(--paper);color:var(--ink)}
-.holzlabor .lead{color:#3d4640}
+/* Holzlabor dunkel wie Storyboard A2 Panel 5: Tischplatte schwebt über 5 Holzscheiben */
+.holzlabor{background:#141412;color:var(--paper)}
 .sec-head{margin-bottom:clamp(36px,6vh,72px)}
-.lab{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(20px,3vw,48px);align-items:center}
-.table-view{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;background:#ddd3c3}
-.table-view .tbl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lab{display:flex;flex-direction:column;gap:clamp(8px,2vw,24px);align-items:center}
+.table-view{position:relative;width:min(1100px,100%);aspect-ratio:16/9;margin-bottom:clamp(-140px,-12vw,-40px)}
+.table-view .tbl{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .table-view .over{opacity:0;transition:opacity .6s}
 .table-view .over.on{opacity:1}
-.woods{display:flex;flex-direction:column;gap:12px}
-.woods button{display:grid;grid-template-columns:56px 1fr;grid-template-rows:auto auto;column-gap:16px;align-items:center;text-align:left;padding:10px 16px 10px 10px;min-height:76px;border-radius:999px;border:2px solid transparent;background:#fff;cursor:pointer;font:800 26px/1 var(--cond);text-transform:uppercase;transition:.25s}
-.woods button::before{content:"";grid-row:1/3;width:56px;height:56px;border-radius:50%;background:radial-gradient(circle at 50% 50%,transparent 0 18%,rgba(0,0,0,.12) 19% 21%,transparent 22% 34%,rgba(0,0,0,.12) 35% 37%,transparent 38% 52%,rgba(0,0,0,.14) 53% 55%,transparent 56%),var(--w)}
-.woods small{font:500 14px var(--sans);text-transform:none;color:#59625c}
-.woods button[aria-checked=true]{border-color:var(--orange);transform:translateX(-8px)}
+.woods{position:relative;display:flex;justify-content:center;gap:clamp(10px,2.4vw,36px);flex-wrap:wrap}
+.woods button{display:flex;flex-direction:column;align-items:center;gap:10px;min-width:44px;border:0;background:none;cursor:pointer;font:700 clamp(18px,1.8vw,26px)/1 var(--cond);color:var(--paper);text-transform:none;transition:transform .3s}
+.woods button::before{content:"";display:block;width:clamp(64px,9vw,128px);aspect-ratio:1;border-radius:50%;border:4px solid transparent;transition:border-color .3s,transform .3s;
+  background:var(--disc,none) center/cover,radial-gradient(circle at 50% 50%,transparent 0 18%,rgba(0,0,0,.12) 19% 21%,transparent 22% 34%,rgba(0,0,0,.12) 35% 37%,transparent 38% 52%,rgba(0,0,0,.14) 53% 55%,transparent 56%),var(--w)}
+.woods small{display:none}
+.woods button[aria-checked=true]{color:var(--orange)}
+.woods button[aria-checked=true]::before{border-color:var(--orange);transform:scale(1.06)}
 
 /* Anfrage */
 .anfrage{background:var(--bg2)}
@@ -171,7 +173,7 @@ dialog .btn{margin-top:20px}
 
 /* Handy */
 @media (max-width:900px){
-  .lab,.two{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
   .phone{justify-self:center}
   .three{grid-template-columns:1fr}
   .req{grid-template-columns:1fr}

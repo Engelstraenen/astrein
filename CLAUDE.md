@@ -30,13 +30,16 @@ Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kos
 - Veröffentlichen: `git subtree split --prefix site -b gh-pages && git push -f origin gh-pages` → https://engelstraenen.github.io/astrein/
 
 ## 8. Offene Fragen
-- Mix-Storyboard A (Nische als zweites Film-Kapitel auf der Hauptseite) oder B (Nische als Unterseite „Einbau nach Maß“) – Bilder in konzepte/, sobald sjinn frei ist.
+- keine (A2 bestätigt). Nächste Freigabe: Startbilder ASF1–ASF7, ASS1–2.
 
 ## 9. Entschieden
 - 23.11.2026: Name ASTREIN (Annahme), Storyboards TSB-1/2/3 in konzepte/ (Prompts konzepte/prompts.md).
 
 - 23.11.2026 (Eugen): Hauptlayout = 3 „Vom Stamm zum Tisch“, dazu die Nische aus 1 als eigener Unterpunkt („beides gemixt“).
 - 23.11.2026: Seitengerüst gebaut (Vanilla, statisch): Stamm-Film → Holzlabor → Einbau-Film (Laser-Aufmaß) → Anfrage (Foto/Maße/Rückruf 24 h) → Karriere-Film + Kinetik → Bewerbung 60 s → Bewertungen (Beispiel) → Footer. Repo github.com/Engelstraenen/astrein, Pages gh-pages.
+
+- 24.11.2026 (Eugen): Storyboard A2 bestätigt (konzepte/mix-a-2.jpg) = verbindliche Vorgabe. Nische als 2. Film-Kapitel auf der Hauptseite. Holzlabor dunkel (Tischplatte schwebt über 5 Holzscheiben). Motivliste konzepte/motive.md.
+- 24.11.2026: Bilder 2K kostenlos auf Dreamina (GPT Image 2.5 Sunburst, Unlimited, A2 als Referenz), Wächter `ASgo`/`AStick` in tools/dreamina_astrein.md. Dreamina-Unlimited = 1 Auftrag kontoweit.
 
 ## 10. Ablage
 Code: Dropbox/CLAUDE/Projekte/ASTREIN · Storyboards: konzepte/
