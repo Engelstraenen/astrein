@@ -18,6 +18,14 @@ window.IMG = {
  "f2-nische": {
   "d": "assets/img/f2-nische.webp",
   "m": "assets/img/f2-nische-m.webp"
+ },
+ "f2b-nische-fertig": {
+  "d": "assets/img/f2b-nische-fertig.webp",
+  "m": "assets/img/f2b-nische-fertig-m.webp"
+ },
+ "f3-karriere": {
+  "d": "assets/img/f3-karriere.webp",
+  "m": "assets/img/f3-karriere-m.webp"
  }
 };
 window.VID = {};
