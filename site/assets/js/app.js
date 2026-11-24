@@ -41,7 +41,7 @@
       v.addEventListener('loadeddata', function () { v.classList.add('ready'); }, { once: true });
     } else { v.remove(); v = null; }
     if (!v && (!poster || poster.hidden)) sec.classList.add('empty');
-    return { sec: sec, v: v, steps: $$('.steps li', sec), says: $$('[data-at]:not(li)', sec), laser: $('.laser', sec) };
+    return { sec: sec, v: v, steps: $$('.steps li', sec), says: $$('[data-at]:not(li)', sec), laser: $('.laser', sec), frames: $$('.frame:not([data-missing])', sec) };
   });
 
   function progress(sec) {
@@ -63,6 +63,12 @@
       var cur = -1;
       f.steps.forEach(function (li, i) { if (p >= +li.getAttribute('data-at')) cur = i; });
       f.steps.forEach(function (li, i) { li.classList.toggle('on', i <= cur); });
+      // Ohne Film: Stationsbilder überblenden (Bild des aktuellen Schritts, sonst das letzte vorhandene davor)
+      if (!f.v && f.frames.length) {
+        var show = null;
+        f.frames.forEach(function (im) { if (+im.getAttribute('data-step') <= Math.max(cur, 0)) show = im; });
+        f.frames.forEach(function (im) { im.classList.toggle('on', im === (show || f.frames[0])); });
+      }
       f.says.forEach(function (e) { e.classList.toggle('on', p >= +e.getAttribute('data-at')); });
       var copy = $('.hero-copy,.chap-copy', f.sec);
       if (copy) { var fade = Math.max(0, 1 - Math.max(0, p - .08) * 6); copy.style.opacity = fade; copy.style.transform = 'translateY(' + (1 - fade) * -40 + 'px)'; }

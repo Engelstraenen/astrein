@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-<div class="demo"><span class="for">So könnte das für <span data-firma></span> aussehen. </span><b>Demo von <a href="https://projektex.de/" rel="noopener">PROJEKT EX</a></b>: erfundener Betrieb, alle Personen, Zahlen und Stimmen sind Beispiele.</div>
+<div class="demo"><span class="for">So könnte das für <span data-firma></span> aussehen. </span><b>Demo von <a href="https://projektex.de/" rel="noopener">PROJEKT EX</a></b><span class="short"> · erfundener Betrieb</span><span class="long">: erfundener Betrieb, alle Personen, Zahlen und Stimmen sind Beispiele.</span></div>
 
 <header class="top" id="top">
   <a class="logo" href="#stamm" aria-label="ASTREIN Startseite">ASTREIN<small>Tischlerei</small></a>
@@ -26,7 +26,10 @@
 <!-- KAPITEL 1: FILM Vom Stamm zum Tisch -->
 <section class="film" id="stamm" data-film="stamm" style="--len:520vh">
   <div class="stage">
-    <img class="poster" data-need="f1-stamm" alt="Eichenstamm im Holzhof bei Sonnenaufgang">
+    <img class="poster frame on" data-need="asf1" data-step="0" alt="Eichenstamm im nebligen Holzhof">
+    <img class="poster frame" data-need="asf2" data-step="1" alt="Tischler hobelt eine Baumkanten-Bohle">
+    <img class="poster frame" data-need="asf3" data-step="2" alt="Verleimte Eichenbohlen mit orangen Zwingen">
+    <img class="poster frame" data-need="asf4" data-step="3" alt="Fertiger Baumkantentisch im Esszimmer">
     <video muted playsinline preload="auto" data-vid="stamm"></video>
     <div class="shade"></div>
     <div class="hero-copy">
@@ -36,13 +39,12 @@
       <a class="btn" href="#anfrage">Projekt anfragen</a>
     </div>
     <ol class="steps" aria-label="Arbeitsschritte">
-      <li data-at=".18"><b>01</b> Auftrennen</li>
-      <li data-at=".34"><b>02</b> Trocknen</li>
-      <li data-at=".5"><b>03</b> Hobeln</li>
-      <li data-at=".66"><b>04</b> Verleimen</li>
-      <li data-at=".82"><b>05</b> Zuhause</li>
+      <li data-at="0"><b>01</b> Stamm</li>
+      <li data-at=".25"><b>02</b> Hobeln</li>
+      <li data-at=".5"><b>03</b> Verleimen</li>
+      <li data-at=".75"><b>04</b> Zuhause</li>
     </ol>
-    <div class="say" data-at=".9"><h2>Ein Tisch für<br>50 Jahre.</h2></div>
+    <div class="say" data-at=".8"><h2>Ein Tisch für<br>50 Jahre.</h2></div>
     <p class="scroll-hint">Scrollen</p>
   </div>
 </section>

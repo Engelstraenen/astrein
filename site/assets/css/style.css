@@ -25,6 +25,7 @@ h3{font-size:clamp(26px,2.4vw,34px)}
 /* Demo-Leiste + Kopfzeile */
 .demo{position:fixed;inset:0 0 auto;z-index:60;height:var(--demo);display:flex;align-items:center;justify-content:center;gap:6px;padding:0 12px;background:#060a08;color:#cfd5d0;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .demo .for{display:none}.has-firma .demo .for{display:inline}
+.demo .short{display:none}
 .top{position:fixed;inset:var(--demo) 0 auto;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px var(--pad);transition:background .3s}
 .top.solid{background:rgba(15,26,21,.86);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
 .logo{font:800 28px/1 var(--cond);letter-spacing:.06em;text-decoration:none;display:flex;flex-direction:column}
@@ -51,6 +52,8 @@ h3{font-size:clamp(26px,2.4vw,34px)}
 .stage{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;background:#0a110d}
 .film.empty .stage{position:relative;min-height:100svh}
 .stage .poster,.stage video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.stage .frame{opacity:0;transform:scale(1.06);transition:opacity .8s ease,transform 6s ease-out}
+.stage .frame.on{opacity:1;transform:scale(1)}
 .stage video{opacity:0;transition:opacity .4s}
 .stage video.ready{opacity:1}
 .shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(8,14,11,.82) 0%,rgba(8,14,11,.35) 45%,rgba(8,14,11,0) 70%),linear-gradient(0deg,rgba(8,14,11,.6),rgba(8,14,11,0) 35%)}
@@ -173,15 +176,17 @@ dialog .btn{margin-top:20px}
 
 /* Handy */
 @media (max-width:900px){
-  .two{grid-template-columns:1fr}
+  .lab,.two{grid-template-columns:1fr}
   .phone{justify-self:center}
   .three{grid-template-columns:1fr}
   .req{grid-template-columns:1fr}
   .portals{grid-template-columns:1fr}
 }
 @media (max-width:700px){
-  :root{--demo:34px}
-  .demo{font-size:12px;white-space:normal;line-height:1.2;text-align:center}
+  :root{--demo:32px}
+  .demo{font-size:14px}
+  .demo .long,.has-firma .demo .for{display:none}
+  .demo .short{display:inline}
   .shade{background:linear-gradient(0deg,rgba(8,14,11,.9) 0%,rgba(8,14,11,.4) 50%,rgba(8,14,11,.2) 100%)}
   .hero-copy,.chap-copy,.say{bottom:clamp(110px,20svh,170px);max-width:calc(100vw - 2 * var(--pad))}
   .steps{top:auto;bottom:24px;left:var(--pad);right:var(--pad);transform:none;flex-direction:row;justify-content:space-between;gap:4px;padding:16px 0 0;border-right:0;border-top:2px solid var(--line)}
