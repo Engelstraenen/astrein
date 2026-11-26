@@ -12,8 +12,9 @@ speed = float(a[a.index('--speed') + 1]) if '--speed' in a else 1.0
 w, h = (int(x) for x in subprocess.check_output(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', src]).decode().strip().split(',')[:2])
 pts = f'setpts={1/speed:.4f}*PTS,' if speed != 1 else ''
 sharp = 'unsharp=5:5:0.7'
-gop = ['-g', '1', '-keyint_min', '1', '-sc_threshold', '0'] if scrub else ['-g', '48']
-base = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', '20' if scrub else '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-r', '30'] + gop
+G = a[a.index('--gop') + 1] if '--gop' in a else '1'  # lange Scroll-Filme: --gop 8 hält die Datei klein
+gop = ['-g', G, '-keyint_min', G, '-sc_threshold', '0', '-bf', '0'] if scrub else ['-g', '48']
+base = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', ('23' if '--gop' in a else '20') if scrub else '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-r', '30'] + gop
 d = os.path.join(OUT, key + '.mp4'); m = os.path.join(OUT, key + '-m.mp4')
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', src, '-vf', f'{pts}{sharp}'] + base + [d], check=True)
 cw = min(w, round(h * 3 / 4)) // 2 * 2
