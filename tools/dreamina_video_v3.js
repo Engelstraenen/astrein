@@ -20,3 +20,22 @@ window.AVgo = async (id) => {
   if (AVrej() > n0) { document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true })); return 'BUSY'; }
   const r = AVrunning() ? 'SENT' : 'UNSURE'; AVlog.push(id + ' ' + r + ' ' + new Date().toLocaleTimeString()); return r; };
 'AV geladen';
+// Warteschlange: je Clip eigenes Datei-Feld avff_<ID> (vorher per file_upload füllen). Startet erst, wenn nichts mehr läuft.
+window.AVffFrom = async (inp) => { [...document.querySelectorAll('[aria-label="Remove · Reference"]')].filter(e => e.offsetParent).forEach(e => e.click()); await AVsleep(800);
+  const f = inp.files[0]; const dt = new DataTransfer(); dt.items.add(f); const tgt = [...document.querySelectorAll('div')].filter(e => e.offsetParent && (e.innerText || '').trim() === 'First frame').pop(); let el = tgt; for (let k = 0; k < 2; k++) el = el.parentElement;
+  for (const t of ['dragenter', 'dragover', 'drop']) el.dispatchEvent(new DragEvent(t, { dataTransfer: dt, bubbles: true, cancelable: true })); await AVsleep(6000); return AVhasFF(); };
+window.AVq = async (ids) => { const run = Date.now(); window.AVqId = run; window.AVqLog = window.AVqLog || [];
+  for (const id of ids) {
+    if (AVlog.some(l => l.startsWith(id + ' SENT'))) continue;
+    while (window.AVqId === run) {
+      if (AVrunning()) { await AVsleep(60000); continue; }
+      const inp = document.getElementById('avff_' + id); if (!inp || !inp.files[0]) { AVqLog.push(id + ' NOFILE'); break; }
+      const n = await AVffFrom(inp); if (n !== 1) { AVqLog.push(id + ' FF' + n); await AVsleep(60000); continue; }
+      const b = AVbar(); if (b && b.sw.getAttribute('aria-checked') !== 'true') { b.sw.click(); await AVsleep(1500); }
+      const r = await AVgo(id); AVqLog.push(new Date().toLocaleTimeString() + ' ' + id + ' ' + r);
+      if (r === 'SENT' || r === 'UNSURE') break;
+      await AVsleep(180000);
+    }
+    if (window.AVqId !== run) return 'replaced';
+  }
+  return 'all sent'; };
