@@ -1,0 +1,47 @@
+[
+ {
+  "seite": "haupt",
+  "url": "index.html",
+  "panels": [
+   "Kommode, Schublade glimmt",
+   "Holzproben in der Schublade",
+   "Hirnholz-Makro",
+   "Laser-Aufmaß",
+   "CNC-Fräsbahnen",
+   "Team + Namensschilder",
+   "Deine Vorteile (Karten)",
+   "Postkarten (Beispiel)",
+   "Handy-Ansicht"
+  ]
+ },
+ {
+  "seite": "tag",
+  "url": "tag.html",
+  "panels": [
+   "07:00 Licht an",
+   "07:30 CNC",
+   "09:00 Raus zum Kunden",
+   "10:30 Schleifen",
+   "12:00 Mittag",
+   "13:30 Musterwand",
+   "14:30 Montage",
+   "15:45 Feierabend",
+   "Handy"
+  ]
+ },
+ {
+  "seite": "lernen",
+  "url": "lernen.html",
+  "panels": [
+   "Start: leere Werkbank",
+   "Monat 2 Anreißen",
+   "Monat 8 Sägen",
+   "Monat 14 CNC",
+   "Monat 20 Verbinden",
+   "Monat 28 Furnieren",
+   "Monat 34 Ölen",
+   "Monat 36 Gesellin",
+   "Handy"
+  ]
+ }
+]
