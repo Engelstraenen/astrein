@@ -39,6 +39,7 @@ if os.path.isdir(VOUT):
         if f.endswith('.mp4') and not f.endswith('-m.mp4'):
             k = f[:-4]; e = {'d': 'assets/vid/' + f}
             if os.path.exists(os.path.join(VOUT, k + '-m.mp4')): e['m'] = 'assets/vid/' + k + '-m.mp4'
+            if os.path.exists(os.path.join(VOUT, k + '-poster.jpg')): e['poster'] = 'assets/vid/' + k + '-poster.jpg'
             vid[k] = e
 open(os.path.join(ROOT, 'site', 'assets', 'js', 'media.js'), 'w').write('window.IMG=' + json.dumps(img) + ';\nwindow.VID=' + json.dumps(vid) + ';\n')
 print(len(img), 'Bilder,', len(vid), 'Videos')
