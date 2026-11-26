@@ -1,0 +1,82 @@
+const WOOD = [
+  { k: 'eiche', n: 'Eiche', lat: 'Quercus robur', x: 26.6, hb: [34, 41], rd: 690, t: 'Hart, zäh, lebhafte Maserung. Unser Allrounder für Tische, Treppen und Fronten.', use: 'Tische · Treppen · Fronten', sw: '#c9a57a' },
+  { k: 'nuss', n: 'Nussbaum', lat: 'Juglans regia', x: 38, hb: [27, 56], rd: 640, t: 'Dunkel, warm, edel. Für Fronten und Furniere, die ins Auge fallen sollen.', use: 'Furnier · Fronten · Einzelstücke', sw: '#5a3c28' },
+  { k: 'esche', n: 'Esche', lat: 'Fraxinus excelsior', x: 49.7, hb: [37, 41], rd: 690, t: 'Hell, elastisch, sehr hart. Ideal für Sitzmöbel und stark genutzte Flächen.', use: 'Stühle · Bänke · Arbeitsflächen', sw: '#e3d2b4' },
+  { k: 'kirsche', n: 'Kirsche', lat: 'Prunus avium', x: 61.5, hb: [29, 31], rd: 600, t: 'Rötlich, dunkelt mit den Jahren nach. Wird mit dem Alter schöner.', use: 'Kommoden · Schränke', sw: '#b0643c' },
+  { k: 'ahorn', n: 'Ahorn', lat: 'Acer pseudoplatanus', x: 73.1, hb: [27, 30], rd: 630, t: 'Fast weiß, feinporig, ruhig. Für helle, moderne Räume.', use: 'Kinderzimmer · helle Küchen', sw: '#ecdcc0' },
+];
+/* Lage im Foto (Prozent des Originalbilds): Proben 21–54 % hoch, je ≈ 9,6 % breit; freie Filzfläche darunter */
+const SAMPLE = { y0: 21, y1: 54.5, w: 9.8 }, FELT = { x0: 19.5, x1: 80.5, y0: 58, y1: 85 };
+const spots = $('#spots'), wcard = $('#wcard'), ah2 = $('img[data-k="ah2"]');
+let curWood = -1;
+spots.innerHTML = '<svg class="dim" id="dim" aria-hidden="true"><path fill-rule="evenodd"/></svg><div class="lift" id="lift" aria-hidden="true"></div><div class="felt" id="felt" aria-live="polite"></div>';
+WOOD.forEach((w, i) => { const b = document.createElement('button'); b.className = 'sample'; b.setAttribute('aria-label', 'Holzprobe ' + w.n); b.innerHTML = '<i></i>'; b.addEventListener('click', () => showWood(i)); spots.appendChild(b); });
+const feltBox = () => { const [x0, y0] = coverXY(ah2, FELT.x0, FELT.y0), [x1, y1] = coverXY(ah2, FELT.x1, FELT.y1); return [x0, y0, x1 - x0, y1 - y0]; };
+const sampleBox = i => { const [x0, y0] = coverXY(ah2, WOOD[i].x - SAMPLE.w / 2, SAMPLE.y0), [x1, y1] = coverXY(ah2, WOOD[i].x + SAMPLE.w / 2, SAMPLE.y1); return [x0, y0, x1 - x0, y1 - y0]; };
+const useFelt = () => { const [, , fw] = feltBox(); return fw >= 560; };
+function layoutSpots() {
+  if (!ah2 || ah2.hidden) return;
+  $$('.sample', spots).forEach((b, i) => { const [x, y, w, h] = sampleBox(i); Object.assign(b.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' }); });
+  const [fx, fy, fw, fh] = feltBox(), felt = $('#felt');
+  Object.assign(felt.style, { left: fx + 'px', top: fy + 'px', width: fw + 'px', height: fh + 'px' });
+  felt.hidden = !useFelt(); wcard.hidden = useFelt();
+  if (curWood >= 0) placeLift(curWood);
+}
+function placeLift(i) {
+  const [x, y, w, h] = sampleBox(i), W = spots.clientWidth, H = spots.clientHeight, r = 4;
+  Object.assign($('#lift').style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+  const svg = $('#dim'); svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  $('path', svg).setAttribute('d', `M0 0H${W}V${H}H0Z M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h - r}Q${x + w} ${y + h} ${x + w - r} ${y + h}H${x + r}Q${x} ${y + h} ${x} ${y + h - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`);
+}
+const bar = (lbl, val, unit, a, b, max) => `<div class="fbar"><span class="fl">${lbl}</span><span class="ft"><i style="--a:${a / max * 100}%;--b:${b / max * 100}%"></i></span><span class="fv mono" data-n="${val}">${val}</span><span class="fu">${unit}</span></div>`;
+function showWood(i) {
+  if (i === curWood) return; curWood = i; const w = WOOD[i];
+  $$('.sample', spots).forEach((b, j) => b.classList.toggle('on', j === i));
+  spots.classList.add('picked'); placeLift(i);
+  const lift = $('#lift'); lift.classList.remove('go'); void lift.offsetWidth; lift.classList.add('go');
+  const felt = $('#felt'); felt.classList.remove('in'); void felt.offsetWidth;
+  felt.style.setProperty('--ox', (sampleBox(i)[0] + sampleBox(i)[2] / 2 - feltBox()[0]) + 'px');
+  felt.innerHTML = `<div class="fcol fname"><p class="eyebrow">Probe ${i + 1} von 5</p><h3>${w.n}</h3><p class="lat">${w.lat}</p></div>
+    <div class="fcol fdata">${bar('Härte', w.hb[0] === w.hb[1] ? w.hb[0] : w.hb[0] + '–' + w.hb[1], 'N/mm²', w.hb[0], w.hb[1], 60)}${bar('Rohdichte', '≈ ' + w.rd, 'kg/m³', 0, w.rd, 900)}<p class="fsrc">Richtwerte, Brinell quer zur Faser</p></div>
+    <div class="fcol ftext"><p>${w.t}</p><p class="fuse">${w.use}</p><a class="more" href="#holzlabor">Im Holzlabor ansehen</a></div>`;
+  $('a', felt).addEventListener('click', () => setWood(i));
+  requestAnimationFrame(() => felt.classList.add('in'));
+  wcard.innerHTML = `<p class="eyebrow">Probe ${i + 1} von 5</p><h3>${w.n}</h3><dl><dt>Härte</dt><dd class="mono">${w.hb[0]}–${w.hb[1]} N/mm²</dd><dt>Rohdichte</dt><dd class="mono">≈ ${w.rd} kg/m³</dd></dl><p>${w.t}</p><a class="more" href="#holzlabor">Im Holzlabor ansehen</a>`;
+  $('a', wcard).addEventListener('click', () => setWood(i));
+}
+ah2 && ah2.addEventListener('load', layoutSpots);
+/* erste Probe öffnet sich, sobald die Schublade im Bild ist */
+new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { layoutSpots(); setTimeout(() => showWood(0), 500); o.disconnect(); } }), { threshold: .5 }).observe($('#holz .pin'));
+
+/* Konfigurator: Holz und Oberfläche wechseln mit einem Wisch wie ein Tuch über die Front */
+const konfImg = $('#konfImg'), FIN = [
+  { k: 'oel', n: 'Geölt', d: 'Offenporig und warm, die Maserung wird tiefer. Wasser zieht nach einer Weile ein – Flecken lassen sich ausschleifen und nachölen.', f: 'saturate(1.35) contrast(1.1) brightness(.9) sepia(.12)' },
+  { k: 'lack', n: 'Matt lackiert', d: 'Geschlossene, seidige Oberfläche mit leichtem Schimmer. Wasser perlt ab – pflegeleicht für Küchen und Bäder.', f: 'saturate(1) contrast(1.04) brightness(1.06)' },
+  { k: 'seife', n: 'Geseift', d: 'Skandinavisch hell und samtig, fast weißlich. Gepflegt mit Seifenlauge, Wasser zieht langsam ein.', f: 'saturate(.55) contrast(.9) brightness(1.2)' },
+];
+let curFin = 0, curK = 0;
+const konfKeys = ['ak1', 'ak2', 'ak3', 'ak4', 'ak5'];
+if (!konfKeys.some(k => IMG[k])) konfImg.hidden = true;
+konfImg.innerHTML = '<img class="kbase" alt=""><div class="ksheen"></div><div class="klbl"><b></b><span></span></div>';
+const kbase = $('.kbase', konfImg);
+function kSrc(i) { return (IMG[konfKeys[i]] || IMG.ak1 || {}).d; }
+function kApply(img) { img.style.filter = FIN[curFin].f; konfImg.dataset.fin = FIN[curFin].k; }
+function kLabel() { $('.klbl b', konfImg).textContent = WOOD[curK].n; $('.klbl span', konfImg).textContent = FIN[curFin].n; const l = $('.klbl', konfImg); l.classList.remove('in'); void l.offsetWidth; l.classList.add('in'); }
+function kWipe() {
+  const top = document.createElement('img'); top.className = 'kwipe'; top.alt = 'Sideboard in ' + WOOD[curK].n + ', ' + FIN[curFin].n; top.src = kSrc(curK); kApply(top);
+  const cloth = document.createElement('i'); cloth.className = 'kcloth';
+  konfImg.appendChild(top); konfImg.appendChild(cloth);
+  requestAnimationFrame(() => requestAnimationFrame(() => { top.classList.add('go'); cloth.classList.add('go'); }));
+  setTimeout(() => { kbase.src = top.src; kbase.alt = top.alt; kApply(kbase); top.remove(); cloth.remove(); }, 1250);
+  kLabel();
+}
+kbase.src = kSrc(0); kbase.alt = 'Sideboard in Eiche, geölt'; kApply(kbase);
+WOOD.forEach((w, i) => { const b = document.createElement('button'); b.className = 'chip' + (i ? '' : ' on'); b.innerHTML = `<span class="sw" style="background:${w.sw}"></span>${w.n}`; b.addEventListener('click', () => setWood(i)); $('#konfWood').appendChild(b); });
+FIN.forEach((f, i) => { const b = document.createElement('button'); b.className = 'chip' + (i ? '' : ' on'); b.textContent = f.n; b.addEventListener('click', () => setFin(i)); $('#konfFinish').appendChild(b); });
+function setWood(i) { if (i === curK) return; curK = i; $$('#konfWood .chip').forEach((b, j) => b.classList.toggle('on', j === i)); kWipe(); dropWood(); }
+function setFin(i, quiet) { curFin = i; $$('#konfFinish .chip').forEach((b, j) => b.classList.toggle('on', j === i)); $('#finTxt').textContent = FIN[i].d; if (!quiet) kWipe(); dropGo(); }
+const drop = $('#drop');
+function dropWood() { drop.style.setProperty('--wood', WOOD[curK].sw); }
+function dropGo() { drop.className = 'drop'; void drop.offsetWidth; drop.classList.add('go', FIN[curFin].k); $('#dropTxt').textContent = FIN[curFin].k === 'lack' ? 'perlt ab' : FIN[curFin].k === 'oel' ? 'zieht ein' : 'zieht langsam ein'; }
+drop.addEventListener('click', dropGo);
+dropWood(); setFin(0, true); kLabel();
