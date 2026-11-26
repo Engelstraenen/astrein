@@ -15,7 +15,7 @@ function loadImgs() {
   $$('img[data-k]').forEach(im => {
     const e = IMG[im.dataset.k];
     if (!e) { im.hidden = true; return; }
-    const src = mobile() && e.m ? e.m : e.d;
+    const src = mobile() && e.m && im.dataset.crop !== 'no' ? e.m : e.d;
     if (im.getAttribute('src') !== src) im.src = src;
     im.hidden = false;
   });
@@ -39,17 +39,19 @@ $('#demoX').addEventListener('click', e => e.target.parentElement.remove());
 /* Position eines Bildpunkts (in % des Originalbilds) bei object-fit: cover */
 function coverXY(img, px, py) {
   const W = img.clientWidth, H = img.clientHeight, w = img.naturalWidth || 16, h = img.naturalHeight || 9;
-  const s = Math.max(W / w, H / h), dw = w * s, dh = h * s;
-  return [(W - dw) / 2 + px / 100 * dw, (H - dh) / 2 + py / 100 * dh];
+  const cs = getComputedStyle(img), contain = cs.objectFit === 'contain';
+  const s = contain ? Math.min(W / w, H / h) : Math.max(W / w, H / h), dw = w * s, dh = h * s;
+  const op = (cs.objectPosition || '50% 50%').split(' ').map(v => parseFloat(v) / 100);
+  return [(W - dw) * op[0] + px / 100 * dw, (H - dh) * op[1] + py / 100 * dh];
 }
 
 /* ===== Kapitel 1: Holzproben ===== */
 const WOOD = [
-  { k: 'eiche', n: 'Eiche', x: 23, y: 33, hb: '34–41', rd: '≈ 690', t: 'Hart, zäh, mit lebhafter Maserung. Unser Allrounder für Tische, Treppen und Fronten.', sw: '#c9a57a' },
-  { k: 'nuss', n: 'Nussbaum', x: 37, y: 33, hb: '≈ 27–56*', rd: '≈ 640', t: 'Dunkel, warm, edel. Für Fronten und Furniere, die ins Auge fallen sollen.', sw: '#5a3c28' },
-  { k: 'esche', n: 'Esche', x: 50, y: 33, hb: '37–41', rd: '≈ 690', t: 'Hell, elastisch, sehr hart. Ideal für Sitzmöbel und stark genutzte Flächen.', sw: '#e3d2b4' },
-  { k: 'kirsche', n: 'Kirsche', x: 63.5, y: 33, hb: '29–31', rd: '≈ 600', t: 'Rötlich und dunkelt mit den Jahren nach. Wird mit dem Alter schöner.', sw: '#b0643c' },
-  { k: 'ahorn', n: 'Ahorn', x: 77, y: 33, hb: '27–30', rd: '≈ 650', t: 'Fast weiß, feinporig, ruhig. Für helle, moderne Räume.', sw: '#ecdcc0' },
+  { k: 'eiche', n: 'Eiche', x: 26.6, y: 37, hb: '34–41', rd: '≈ 690', t: 'Hart, zäh, mit lebhafter Maserung. Unser Allrounder für Tische, Treppen und Fronten.', sw: '#c9a57a' },
+  { k: 'nuss', n: 'Nussbaum', x: 38, y: 37, hb: '≈ 27–56*', rd: '≈ 640', t: 'Dunkel, warm, edel. Für Fronten und Furniere, die ins Auge fallen sollen.', sw: '#5a3c28' },
+  { k: 'esche', n: 'Esche', x: 49.7, y: 37, hb: '37–41', rd: '≈ 690', t: 'Hell, elastisch, sehr hart. Ideal für Sitzmöbel und stark genutzte Flächen.', sw: '#e3d2b4' },
+  { k: 'kirsche', n: 'Kirsche', x: 61.5, y: 37, hb: '29–31', rd: '≈ 600', t: 'Rötlich und dunkelt mit den Jahren nach. Wird mit dem Alter schöner.', sw: '#b0643c' },
+  { k: 'ahorn', n: 'Ahorn', x: 73.1, y: 37, hb: '27–30', rd: '≈ 650', t: 'Fast weiß, feinporig, ruhig. Für helle, moderne Räume.', sw: '#ecdcc0' },
 ];
 const spots = $('#spots'), wcard = $('#wcard'), ah2 = $('img[data-k="ah2"]');
 let curWood = 0;
