@@ -95,18 +95,25 @@ fe.addEventListener('input', calc); calc();
 
 /* Team-Badges + Personen */
 const TEAM = [
-  { n: 'LINA', x: 66, y: 78, r: -3, role: 'CNC-Programmiererin', t: 'Seit 4 Jahren dabei, Gesellin, macht gerade den CNC-Fachkraft-Schein.', px: 63 },
-  { n: 'JONAS', x: 80, y: 74, r: 4, role: 'Furnier & Oberfläche', t: 'Gesellenstück: Nussbaum-Kommode. Liebt gespiegelte Furniere.', px: 72 },
-  { n: 'MELI', x: 64, y: 86, r: 2, role: 'Azubi, 2. Lehrjahr', t: 'Vorher Abi, dann Tischlerei statt Hörsaal. Steht gerade an der Kantenanleimmaschine.', px: 83 },
-  { n: 'TIMO', x: 79, y: 84, r: -2, role: 'Montage', t: 'Baut beim Kunden ein. Seine Schattenfugen sind gleich breit. Immer.', px: 93 },
+  { n: 'LINA', x: 56.1, y: 52.7, role: 'CNC-Programmiererin', t: 'Seit 4 Jahren dabei, Gesellin, macht gerade den CNC-Fachkraft-Schein.', px: 73.5 },
+  { n: 'JONAS', x: 69.8, y: 52.7, role: 'Furnier & Oberfläche', t: 'Gesellenstück: Nussbaum-Kommode. Liebt gespiegelte Furniere.', px: 60.3 },
+  { n: 'MELI', x: 56.4, y: 66.9, role: 'Azubi, 2. Lehrjahr', t: 'Vorher Abi, dann Tischlerei statt Hörsaal. Ihr Gesellenstück entsteht gerade – siehe „Was du lernst“.', px: 48.8 },
+  { n: 'TIMO', x: 70.1, y: 66.9, role: 'Montage', t: 'Baut beim Kunden ein. Seine Schattenfugen sind gleich breit. Immer.', px: 85 },
 ];
 const teamA = $('#teamA'), teamB = $('#teamB'), badges = $('#badges'), people = $('#people');
-TEAM.forEach(p => { const b = document.createElement('span'); b.className = 'badge'; b.textContent = p.n; b.style.setProperty('--r', p.r + 'deg'); badges.appendChild(b);
+TEAM.forEach(p => { const b = document.createElement('span'); b.className = 'badge'; b.textContent = p.n;  badges.appendChild(b);
   const d = document.createElement('div'); d.className = 'person'; d.innerHTML = `<div class="pc"><b>${p.n[0] + p.n.slice(1).toLowerCase()}</b>${p.role}<br>${p.t}</div><button>${p.n[0] + p.n.slice(1).toLowerCase()}</button>`; $('button', d).addEventListener('click', () => { $$('.person').forEach(x => x !== d && x.classList.remove('open')); d.classList.toggle('open'); }); people.appendChild(d); });
 function layoutTeam() {
-  if (teamA && !teamA.hidden) $$('.badge', badges).forEach((b, i) => { const [x, y] = coverXY(teamA, TEAM[i].x, TEAM[i].y); b.style.left = x + 'px'; b.style.top = y + 'px'; });
-  if (teamB && !teamB.hidden) $$('.person', people).forEach((d, i) => { const [x, y] = coverXY(teamB, TEAM[i].px, 88); d.style.left = x + 'px'; d.style.top = Math.min(y, innerHeight - 120) + 'px'; });
+  if (teamA && !teamA.hidden) { const [x0] = coverXY(teamA, 0, 0), [x1] = coverXY(teamA, 100, 0), iw = x1 - x0; $$('.badge', badges).forEach((b, i) => { const [x, y] = coverXY(teamA, TEAM[i].x, TEAM[i].y); b.style.left = x + 'px'; b.style.top = y + 'px'; b.style.fontSize = Math.max(11, iw * 0.0125) + 'px'; }); }
+  if (teamB && !teamB.hidden) $$('.person', people).forEach((d, i) => { const [x, y] = coverXY(teamB, TEAM[i].px, 62); d.style.left = x + 'px'; d.style.top = Math.min(y, innerHeight - 140) + 'px'; });
 }
+/* Lohnkarten in Schublade 5 (Tarif Berlin 2026) */
+const PAYL = [['Azubi · 1. Jahr', '810 €', 32, 35.6], ['Azubi · 2. Jahr', '900 €', 50, 35.6], ['Azubi · 3. Jahr', '1.050 €', 68.1, 35.6], ['Geselle', '16,97 €/h', 30.9, 57.6], ['CNC-Fachkraft', '23,76 €/h', 50, 57.6], ['Meister', 'bis 29,70 €/h', 69, 57.6]];
+const payImg = $('#payImg'), payLbl = $('#payLbl');
+PAYL.forEach(([a, b]) => { const d = document.createElement('span'); d.className = 'badge paylbl'; d.innerHTML = `<small>${a}</small>${b}`; payLbl.appendChild(d); });
+function layoutPay() { if (!payImg || payImg.hidden) return; const [x0] = coverXY(payImg, 0, 0), [x1] = coverXY(payImg, 100, 0), iw = x1 - x0; $$('.paylbl', payLbl).forEach((d, i) => { const [x, y] = coverXY(payImg, PAYL[i][2], PAYL[i][3]); d.style.left = x + 'px'; d.style.top = y + 'px'; d.style.fontSize = Math.max(12, iw * 0.019) + 'px'; }); }
+payImg && payImg.addEventListener('load', layoutPay); addEventListener('resize', layoutPay);
+const vort = $('#vorteile');
 teamA && teamA.addEventListener('load', layoutTeam); teamB && teamB.addEventListener('load', layoutTeam);
 
 /* Lohnrechner (Tarif Tischlerhandwerk Berlin ab 01.01.2026) */
@@ -224,6 +231,7 @@ function frame() {
   people.style.opacity = clamp((pt - .6) / .1);
   people.style.pointerEvents = pt > .6 ? 'auto' : 'none';
   $('#teamH').textContent = pt > .5 ? 'Lina, Jonas, Meli, Timo.' : 'Vier Namen. Ein Anspruch.';
+  const pv = prog(vort); $$('.paylbl', payLbl).forEach((d, i) => d.classList.toggle('in', pv > .05 + i * .07));
   /* aktives Kapitel → Kommode */
   let ch = 0; chapters.forEach(c => { if (c.getBoundingClientRect().top < innerHeight * .5) ch = +c.dataset.ch; });
   if (ch !== lastCh) { komLinks.forEach(a => a.classList.toggle('on', +a.dataset.n === ch)); lastCh = ch; }
