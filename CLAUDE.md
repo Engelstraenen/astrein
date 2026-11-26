@@ -43,5 +43,7 @@ Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kos
 
 - 26.11.2026 (Eugen): Kompletter Neubau nach V2.79. Beruf cool verkaufen, cooles Team, Karriere-Unterpunkt mit Vorteilen Azubi + Fachkraft und offenem Lohn. 3 Storyboards V3 in konzepte/v3/ (Schichtuhr, Schublade, Crew).
 
+- 26.11.2026 (Eugen): Hauptseite = Storyboard 2 „Die Schublade“ (Bordeaux + Creme = CI), ausbauen. Unterseite „Ein Tag bei uns“ = Storyboard 1 Schichtuhr (in CI-Farben). Neue Unterseite „Was du lernst“ (kein Scrollytelling nötig, Motion-Frames/Videos, cool). Crew (Neon) verworfen: passt nicht zu Tischlern.
+
 ## 10. Ablage
 Code: Dropbox/CLAUDE/Projekte/ASTREIN · Storyboards: konzepte/

@@ -1,0 +1,11 @@
+# Video-Drafts V3 (Dreamina Seedance 2.5, „First and last frames“ nur First Frame, 16:9 720P, Unlimited 0, 5–6 s)
+Gemeinsam am Ende: "ACTION STARTS IMMEDIATELY IN THE VERY FIRST FRAME, no still moment. One continuous shot, no cuts. Photorealistic, real physics, hands and tools stay in frame and never morph. No text, no logos, no clichés. Modern black workwear."
+V1 (AH1, 6 s) The top drawer of the walnut chest glides out toward the camera on full-extension runners in one smooth soft-close motion, warm golden light spills out of it over the bordeaux room, the camera pushes in slowly toward the opening drawer until the open drawer fills the lower frame.
+V2 (AH5, 6 s) The carpenter steps to the small tripod and turns the green cross line laser a little, the bright green lines slide across the bare plaster of the empty stair niche and settle on the slope edge, he then taps measurements into his tablet. Camera static, eye level.
+V3 (AH6, 6 s) The CNC spindle with the transparent brush hood moves steadily along the toolpath and cuts a clean groove into the MDF board, fine dust is sucked up into the hose, the camera tracks slowly along with the spindle.
+V4 (AH7, 6 s) The two carpenters lower the walnut veneer sheet flat onto the panel and smooth it with flat hands, then step back as the upper plate of the veneer press lowers smoothly onto it.
+V5 (AH8, 6 s) The apprentice pushes the oak-veneered panel along the feed table into the edge banding machine, the edge band runs onto the panel edge, the panel moves steadily through the machine, the trainer nods.
+V6 (AH12, 5 s) The kneeling carpenter presses a handleless front of the built-in cabinet, the full-extension drawer opens smoothly with push-to-open, he checks it and pushes it closed softly, the fronts are flush again.
+T1 (AT1, 5 s) The workshop hall ceiling lights switch on row by row from the back to the front while the three carpenters walk in with coffee cups, blue skylights turn into warm workshop light.
+T3 (AT6, 5 s) The team on pallets laughs, one hands a bottle across, another leans back in the sun, relaxed natural movement.
+T4 (AT9, 5 s) The team rides out of the hall gate on bikes into the golden evening sun, the van pulls away behind them.
