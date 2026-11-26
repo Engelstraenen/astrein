@@ -25,14 +25,14 @@
 .gstxt h1.in span{opacity:1;transform:none}
 .gstxt ul{list-style:none;margin-top:18px;display:grid;gap:6px;font-size:clamp(15px,1.25vw,18px);color:var(--cr2)}
 .gstxt li::before{content:"— ";color:var(--glow)}
-.gstxt .note{margin-top:14px;font:13px/1.5 var(--mono);color:var(--cr3)}
+.gstxt .note{margin-top:14px;font:14px/1.5 var(--mono);color:var(--cr3)}
 .tl{position:absolute;z-index:4;left:var(--gut);right:calc(var(--gut) + 90px);bottom:84px;height:64px;touch-action:none;cursor:grab}
 .tl:active{cursor:grabbing}
 .tl .rail{position:absolute;left:0;right:0;top:30px;height:2px;background:rgba(240,226,200,.22)}
 .tl .fillr{position:absolute;left:0;top:30px;height:2px;background:var(--glow)}
-.tl .yr{position:absolute;top:44px;font:500 13px/1 var(--mono);color:var(--cr2);transform:translateX(-50%);white-space:nowrap}
-.tl .yr:first-of-type{transform:none}.tl .yr:last-of-type{transform:translateX(-100%)}
-.tl .yr:first-of-type::before{left:0}.tl .yr:last-of-type::before{left:100%}
+.tl .yr{position:absolute;top:44px;font:500 14px/1 var(--mono);color:var(--cr2);transform:translateX(-50%);white-space:nowrap}
+.tl .yr0{transform:none}.tl .yr3{transform:translateX(-100%)}
+.tl .yr0::before{left:0}.tl .yr3::before{left:100%}
 .tl .yr::before{content:"";position:absolute;left:50%;top:-18px;width:1px;height:10px;background:rgba(240,226,200,.5)}
 .tl .ms{position:absolute;top:24px;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:2px solid var(--cr3);background:#160709;transition:.3s}
 .tl .ms.done{border-color:var(--glow);background:var(--glow)}
@@ -69,7 +69,7 @@
     </div>
     <div class="tl" id="tl" role="slider" aria-label="Ausbildungsmonat" aria-valuemin="0" aria-valuemax="36" tabindex="0">
       <div class="rail"></div><div class="fillr" id="fillr"></div>
-      <span class="yr" style="left:0%">Start</span><span class="yr" style="left:33.33%">1. Jahr</span><span class="yr" style="left:66.66%">2. Jahr</span><span class="yr" style="left:100%">3. Jahr</span>
+      <span class="yr yr0" style="left:0%">Start</span><span class="yr" style="left:33.33%">1. Jahr</span><span class="yr" style="left:66.66%">2. Jahr</span><span class="yr yr3" style="left:100%">3. Jahr</span>
       <div class="knob" id="knob">0</div>
     </div>
     <p class="drag">Ziehen oder scrollen →<br>36 Monate, ein Schrank</p>

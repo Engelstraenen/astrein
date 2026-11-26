@@ -259,3 +259,8 @@ h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.04;letter-spacin
   .people.row{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;padding:0 var(--gut);bottom:auto;height:auto}
   .people.row .person{position:relative;left:auto!important;top:auto!important;transform:none;min-width:0}
 }
+
+/* Handy-Feinschliff Runde 2 (26.11.) */
+.foot .cols a{padding:12px 0}
+.lead a,.panel p a{display:inline-block;padding:12px 0;margin:-12px 0}
+@media (max-height:500px){.paylbl,.badge{display:none}}

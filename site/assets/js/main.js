@@ -106,7 +106,7 @@ TEAM.forEach(p => { const b = document.createElement('span'); b.className = 'bad
 function layoutTeam() {
   if (teamA && !teamA.hidden) { const [x0] = coverXY(teamA, 0, 0), [x1] = coverXY(teamA, 100, 0), iw = x1 - x0; $$('.badge', badges).forEach((b, i) => { const [x, y] = coverXY(teamA, TEAM[i].x, TEAM[i].y); b.style.left = x + 'px'; b.style.top = y + 'px'; b.style.fontSize = Math.max(11, iw * 0.0125) + 'px'; }); }
   const row = innerWidth < 900 && innerHeight > innerWidth; people.classList.toggle('row', row);
-  if (row && teamB && !teamB.hidden) { const [, yb] = coverXY(teamB, 0, 100); people.style.top = (yb + 14) + 'px'; } else people.style.top = '';
+  if (row && teamB && !teamB.hidden) { const [, yb] = coverXY(teamB, 0, 100); people.style.top = Math.max(0, yb - 58) + 'px'; } else people.style.top = '';
   if (!row && teamB && !teamB.hidden) $$('.person', people).forEach((d, i) => { const [x, y] = coverXY(teamB, TEAM[i].px, 62); d.style.left = x + 'px'; d.style.top = Math.min(y, innerHeight - 140) + 'px'; });
 }
 /* Lohnkarten in Schublade 5 (Tarif Berlin 2026) */
