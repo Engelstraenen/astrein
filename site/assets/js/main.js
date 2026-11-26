@@ -98,17 +98,19 @@ new IntersectionObserver((es, o) => es.forEach(e => { if (e.isIntersecting) { la
 
 /* Konfigurator: Holz und Oberfläche wechseln mit einem Wisch wie ein Tuch über die Front */
 const konfImg = $('#konfImg'), FIN = [
-  { k: 'oel', n: 'Geölt', d: 'Offenporig und warm, die Maserung wird tiefer. Wasser zieht nach einer Weile ein – Flecken lassen sich ausschleifen und nachölen.', f: 'saturate(1.35) contrast(1.1) brightness(.9) sepia(.12)' },
-  { k: 'lack', n: 'Matt lackiert', d: 'Geschlossene, seidige Oberfläche mit leichtem Schimmer. Wasser perlt ab – pflegeleicht für Küchen und Bäder.', f: 'saturate(1) contrast(1.04) brightness(1.06)' },
-  { k: 'seife', n: 'Geseift', d: 'Skandinavisch hell und samtig, fast weißlich. Gepflegt mit Seifenlauge, Wasser zieht langsam ein.', f: 'saturate(.55) contrast(.9) brightness(1.2)' },
+  { k: 'oel', p: 'ak', n: 'Geölt', d: 'Offenporig und warm, die Maserung wird tiefer. Wasser zieht nach einer Weile ein – Flecken lassen sich ausschleifen und nachölen.' },
+  { k: 'lack', p: 'akl', n: 'Matt lackiert', d: 'Geschlossene, seidige Oberfläche mit leichtem Schimmer. Wasser perlt ab – pflegeleicht für Küchen und Bäder.' },
+  { k: 'seife', p: 'aks', n: 'Geseift', d: 'Hell, trocken und samtig matt wie frisch geschliffen. Gepflegt mit Seifenlauge, Wasser zieht langsam ein.' },
 ];
 let curFin = 0, curK = 0;
-const konfKeys = ['ak1', 'ak2', 'ak3', 'ak4', 'ak5'];
-if (!konfKeys.some(k => IMG[k])) konfImg.hidden = true;
-konfImg.innerHTML = '<img class="kbase" alt=""><div class="ksheen"></div><div class="klbl"><b></b><span></span></div>';
+/* echte Fotos je Holz × Oberfläche: ak<n> geölt, akl<n> matt lackiert, aks<n> geseift */
+if (!IMG.ak1) konfImg.hidden = true;
+konfImg.innerHTML = '<img class="kbase" alt=""><div class="klbl"><b></b><span></span></div>';
 const kbase = $('.kbase', konfImg);
-function kSrc(i) { return (IMG[konfKeys[i]] || IMG.ak1 || {}).d; }
-function kApply(img) { img.style.filter = FIN[curFin].f; konfImg.dataset.fin = FIN[curFin].k; }
+function kSrc(i) { const e = IMG[FIN[curFin].p + (i + 1)] || IMG['ak' + (i + 1)] || IMG.ak1 || {}; return e.d; }
+function kApply(img) { konfImg.dataset.fin = FIN[curFin].k; }
+/* alle 15 Fotos vorladen, damit der Wisch sofort sitzt */
+new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { FIN.forEach(f => WOOD.forEach((w, i) => { const e = IMG[f.p + (i + 1)]; if (e) (new Image()).src = e.d; })); o.disconnect(); } }, { rootMargin: '600px' }).observe(konfImg);
 function kLabel() { $('.klbl b', konfImg).textContent = WOOD[curK].n; $('.klbl span', konfImg).textContent = FIN[curFin].n; const l = $('.klbl', konfImg); l.classList.remove('in'); void l.offsetWidth; l.classList.add('in'); }
 function kWipe() {
   const top = document.createElement('img'); top.className = 'kwipe'; top.alt = 'Sideboard in ' + WOOD[curK].n + ', ' + FIN[curFin].n; top.src = kSrc(curK); kApply(top);

@@ -16,7 +16,7 @@ DQ.go = async () => {
   const b = DQ.bar(); if (!b) return 'NOBAR';
   if (b.sw.getAttribute('aria-checked') !== 'true') return 'SWITCH-OFF';
   if (!/2K/.test(b.t) || !/Medium/.test(b.t) || !/16:9/.test(b.t)) return 'SETTINGS ' + b.t;
-  if (b.price !== '0') return 'PRICE ' + b.price;
+  if (b.price !== '0' && b.price !== '') return 'PRICE ' + b.price; // leer = Unlimited ohne Zahl
   const g = [...b.c.querySelectorAll('button')].filter(x => x.offsetParent).pop(); if (!g || g.disabled) return 'NOBUTTON';
   const n0 = (document.body.innerText.match(/run up to 1 generation/gi) || []).length;
   g.click(); await DQ.sleep(45000);
@@ -40,6 +40,28 @@ DQ.run = async (jobs) => {
       DQ.last = new Date().toLocaleTimeString() + ' ' + j.id + ' ' + r;
       if (r === 'SENT' || r === 'UNSURE') { DQ.log.push({ id: j.id, st: 'SENT', r, t: Date.now() }); break; }
       if (r === 'PRICE ' || r === 'NOBAR' || r === 'NOBUTTON') { await DQ.sleep(20000); continue; }
+      if (r !== 'BUSY') { DQ.stopped = r; return r; }
+      await DQ.sleep(180000);
+    }
+    if (DQ.runId !== run) return 'replaced';
+  }
+  return 'all sent';
+};
+// Je Auftrag eigene Referenz: jobs [{id, p, ref: 'dqref_1'}] – alte Referenz raus, neue per Paste rein, dann Prompt.
+DQ.clearRef = async () => { [...document.querySelectorAll('[aria-label="Remove · Reference"]')].filter(e => e.offsetParent).forEach(e => e.click()); await DQ.sleep(1200); return DQ.mentions(); };
+DQ.run2 = async (jobs) => {
+  const run = Date.now(); DQ.runId = run;
+  for (const j of jobs) {
+    if (DQ.log.some(l => l.id === j.id && l.st === 'SENT')) continue;
+    while (DQ.runId === run) {
+      if (DQ.busy()) { await DQ.sleep(60000); continue; }
+      await DQ.clearRef(); await DQ.ref(document.getElementById(j.ref)); await DQ.sleep(4000);
+      if (DQ.mentions() !== 1) { DQ.last = j.id + ' REF ' + DQ.mentions(); await DQ.sleep(30000); continue; }
+      DQ.set(j.p); await DQ.sleep(1500);
+      const r = await DQ.go();
+      DQ.last = new Date().toLocaleTimeString() + ' ' + j.id + ' ' + r;
+      if (r === 'SENT' || r === 'UNSURE') { DQ.log.push({ id: j.id, st: 'SENT', r, t: Date.now() }); break; }
+      if (r.startsWith('PRICE') || r === 'NOBAR' || r === 'NOBUTTON') { await DQ.sleep(30000); continue; }
       if (r !== 'BUSY') { DQ.stopped = r; return r; }
       await DQ.sleep(180000);
     }
