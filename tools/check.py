@@ -24,7 +24,7 @@ with sync_playwright() as p:
     pg.wait_for_timeout(600)
     for s in spots:
         ch, f = s.split(":")
-        y = pg.evaluate("""([id,f])=>{const s=document.getElementById(id);const t=s.offsetTop+(s.offsetHeight-innerHeight)*f;window.scrollTo(0,t);return t}""", [ch, float(f)])
+        y = pg.evaluate("""([id,f])=>{const s=document.getElementById(id)||document.body;const t=s.offsetTop+(s.offsetHeight-innerHeight)*f;window.scrollTo(0,t);return t}""", [ch, float(f)])
         pg.wait_for_timeout(450)
         fn = os.path.join(out, "%s-%s-%dx%d.jpg" % (ch, f.replace(".", ""), w, h))
         pg.screenshot(path=fn, type="jpeg", quality=70)

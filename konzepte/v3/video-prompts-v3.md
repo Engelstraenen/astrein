@@ -9,3 +9,8 @@ V6 (AH12, 5 s) The kneeling carpenter presses a handleless front of the built-in
 T1 (AT1, 5 s) The workshop hall ceiling lights switch on row by row from the back to the front while the three carpenters walk in with coffee cups, blue skylights turn into warm workshop light.
 T3 (AT6, 5 s) The team on pallets laughs, one hands a bottle across, another leans back in the sun, relaxed natural movement.
 T4 (AT9, 5 s) The team rides out of the hall gate on bikes into the golden evening sun, the van pulls away behind them.
+
+L3 (AL3, 5 s) The apprentice pushes the walnut board steadily through the sliding panel saw, sawdust is sucked into the hood, the offcut drops away.
+L5 (AL5, 5 s) The apprentice turns the last clamp handle tight, a small bead of glue squeezes out of the joint, she steps back and checks the diagonal with a tape.
+L6 (AL6, 5 s) The apprentice opens the last walnut veneer leaf like a book page, the mirrored pattern completes, she smooths it flat with both hands.
+L7 (AL7, 5 s) The cloth glides along the walnut door in long strokes, the oil darkens and deepens the grain where it passes.

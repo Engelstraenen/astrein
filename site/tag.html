@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Ein Tag bei uns – ASTREIN Tischlerei</title>
+<meta name="description" content="07:00 bis 16:00 – ein echter Arbeitstag in der Tischlerei ASTREIN. Für alle, die überlegen, bei uns anzufangen.">
+<meta name="theme-color" content="#f0e2c8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+/* Unterseite „Ein Tag“: helle CI-Variante (Creme-Grund, Bordeaux-Akzent) */
+body.tag{--bg:#f0e2c8;--bg-rgb:240,226,200;--bg2:#e6d4b3;--bg3:#f6ecd9;--cr:#2a0f14;--cr-rgb:42,15,20;--cr2:rgba(42,15,20,.74);--cr3:rgba(42,15,20,.5);--line:rgba(42,15,20,.16);--or:#7a1e2b;--on-or:#f6ecd9;--acc:#8e2433}
+.tag .hdr.solid{background:rgba(240,226,200,.9)}
+#day{height:1000vh;position:relative}
+#day .pin{background:#1a0d0f}
+.shot{position:absolute;inset:0;opacity:0;transition:opacity .9s}
+.shot.on{opacity:1}
+.shot img,.shot video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.06);transition:transform 9s linear}
+.shot.on img{transform:scale(1)}
+.tint{position:absolute;inset:0;pointer-events:none;mix-blend-mode:soft-light;transition:background 1.2s}
+.veil{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,13,15,.72),rgba(26,13,15,.1) 60%);pointer-events:none}
+.clock{position:absolute;z-index:4;left:var(--gut);top:calc(var(--hdr) + 6vh);color:#f6ecd9}
+.clock .time{font:400 clamp(80px,13vw,200px)/.9 var(--serif);letter-spacing:-.02em;color:#f0e2c8;font-variant-numeric:tabular-nums}
+.clock .time b{font-weight:400;color:#e88c74}
+.clock h2{font-size:clamp(30px,4vw,58px);margin-top:16px;max-width:620px;color:#f6ecd9}
+.clock p{margin-top:14px;max-width:520px;color:rgba(246,236,217,.82);font-size:clamp(16px,1.3vw,19px)}
+.arc{position:absolute;z-index:4;right:-38vh;top:50%;width:76vh;height:76vh;transform:translateY(-50%);pointer-events:none}
+.arc svg{width:100%;height:100%;overflow:visible}
+.arc .tick{stroke:rgba(246,236,217,.45);stroke-width:2}
+.arc .tick.big{stroke:#e88c74;stroke-width:3}
+.arc text{fill:rgba(246,236,217,.75);font:500 15px var(--mono)}
+.arc .hand{stroke:#e88c74;stroke-width:3;transition:transform .2s}
+.arcnav{position:absolute;z-index:5;right:22px;bottom:90px;display:flex;flex-direction:column;gap:6px}
+.arcnav a{font:500 13px/1 var(--mono);color:rgba(246,236,217,.6);text-decoration:none;min-height:30px;display:flex;align-items:center;justify-content:flex-end}
+.arcnav a.on{color:#e88c74}
+.kin{position:absolute;z-index:4;left:var(--gut);bottom:12vh;display:grid;gap:4px}
+.kin span{font:400 clamp(54px,9vw,140px)/.95 var(--serif);color:#e88c74;opacity:0;transform:translateX(-60px);transition:opacity .7s,transform .9s cubic-bezier(.2,.8,.2,1)}
+.kin.in span{opacity:1;transform:none}
+.kin.in span:nth-child(2){transition-delay:.15s}.kin.in span:nth-child(3){transition-delay:.3s}
+@media (max-width:900px){
+  .arc{right:50%;top:calc(var(--hdr) - 34vw);width:110vw;height:110vw;transform:translateX(50%)}
+  .arcnav{display:none}
+  .clock{top:auto;bottom:110px}
+  .clock .time{font-size:clamp(64px,22vw,120px)}
+  .veil{background:linear-gradient(0deg,rgba(26,13,15,.85),rgba(26,13,15,.1) 70%)}
+  .kin{bottom:auto;top:calc(var(--hdr) + 40px)}
+}
+</style>
+</head>
+<body class="tag">
+<header class="hdr" id="hdr">
+  <a class="logo" href="./"><b class="firma">ASTREIN</b><span>Tischlerei</span></a>
+  <ul class="menu" id="menu">
+    <li><a href="./">Die Schublade</a></li>
+    <li><a href="tag.html" class="on">Ein Tag bei uns</a></li>
+    <li><a href="lernen.html">Was du lernst</a></li>
+    <li><a href="karriere.html">Karriere &amp; Lohn</a></li>
+  </ul>
+  <a class="btn" href="#bewerbung">In 60 Sekunden bewerben</a>
+  <button class="burger" id="burger" aria-label="Menü"><i></i><i></i></button>
+</header>
+<main>
+<section id="day" class="stage">
+  <div class="pin">
+    <div id="shots"></div>
+    <div class="tint" id="tint"></div>
+    <div class="veil"></div>
+    <div class="arc" aria-hidden="true"><svg viewBox="-200 -200 400 400" id="arcsvg"></svg></div>
+    <div class="clock">
+      <a class="back" href="./#team" style="color:rgba(246,236,217,.75)">Zurück zu Schublade 4</a>
+      <div class="time mono" id="time">06<b>:</b>58</div>
+      <h2 id="tH"></h2>
+      <p id="tP"></p>
+    </div>
+    <div class="kin" id="kin"><span>Ausbildung.</span><span>Lohn offen.</span><span>Team.</span></div>
+    <nav class="arcnav" id="arcnav" aria-label="Uhrzeiten"></nav>
+  </div>
+</section>
+
+<div class="block" id="bewerbung">
+  <div class="grid2">
+    <div>
+      <p class="eyebrow">16:00 · Feierabend</p>
+      <h2>Morgen um sieben?</h2>
+      <p class="lead">Komm für einen Probetag vorbei oder bewirb dich direkt. Ausbildung ab 810 € im ersten Jahr, Gesellen nach Tarif ab 16,97 € pro Stunde – <a href="karriere.html">alles offen gelegt</a>.</p>
+      <a class="more" href="lernen.html">Was du bei uns lernst</a>
+    </div>
+    <div class="panel">
+      <h3>In 60 Sekunden bewerben</h3>
+      <form class="form">
+        <div class="seg" role="group" aria-label="Was suchst du?"><button type="button" class="chip on">Probetag</button><button type="button" class="chip">Ausbildung</button><button type="button" class="chip">Geselle/Gesellin</button></div>
+        <label>Vorname<input autocomplete="given-name" required></label>
+        <label>Handy oder E-Mail<input required></label>
+        <button class="btn" type="submit">Abschicken</button>
+        <div class="done">Danke! In echt würden wir uns innerhalb von 48 Stunden melden. (Demo – es wurde nichts gesendet.)</div>
+      </form>
+    </div>
+  </div>
+</div>
+</main>
+<footer class="foot" style="padding-top:60px"><div class="cols"><div><a class="logo" href="./"><b class="firma">ASTREIN</b><span>Tischlerei</span></a><p style="margin-top:14px">Demo-Seite einer erfundenen Tischlerei. Tagesablauf als Beispiel.</p></div><div><a href="./">Die Schublade</a><a href="werkstatt.html">Werkstatt</a></div><div><a href="lernen.html">Was du lernst</a><a href="karriere.html">Karriere &amp; Lohn</a></div></div></footer>
+<div class="demo"><span>Demo · erfundene Tischlerei · Tagesablauf Beispiel</span><button id="demoX" aria-label="Hinweis schließen">✕</button></div>
+<script src="assets/js/media.js"></script>
+<script src="assets/js/sub.js"></script>
+<script>
+(() => {
+const {$, $$, IMG, VID, mobile} = window.SUB;
+const DAY = [
+  {t:'06:58', k:'at1', v:'t1', h:'Licht an.', p:'Die Halle ist noch blau. Kaffee in der Hand, die Absaugung läuft an.', tint:'rgba(40,70,140,.35)'},
+  {t:'07:15', k:'at2', h:'Fünf Minuten Plan.', p:'Wer fräst, wer furniert, wer fährt raus? Alle wissen, was heute passiert.', tint:'rgba(120,120,160,.2)'},
+  {t:'07:30', k:'at3', v:'t2', h:'Die CNC startet.', p:'Lina lädt das Programm, das gestern beim Kunden gemessen wurde.', tint:'rgba(255,220,170,.12)'},
+  {t:'09:00', k:'at4', h:'Raus zum Kunden.', p:'Fronten in Decken, Werkzeug in Kisten. Montage ist Teamsport.', tint:'rgba(255,230,190,.1)'},
+  {t:'10:30', k:'at5', h:'Schleifen mit Absaugung.', p:'Staub im Gegenlicht – aber nicht in der Lunge.', tint:'rgba(255,215,160,.14)'},
+  {t:'12:00', k:'at6', v:'t3', h:'Mittag im Hallentor.', p:'Paletten, Sonne, zu viel Gelächter. Pause ist Pause.', tint:'rgba(255,200,120,.18)'},
+  {t:'13:30', k:'at7', h:'Die Meisterin zeigt es einmal.', p:'Dann machst du es. Und dann noch mal, bis es sitzt.', tint:'rgba(255,205,150,.16)'},
+  {t:'14:30', k:'at8', h:'Die Küche hängt.', p:'Front einhängen, ausrichten, Fuge prüfen. Der Kunde kommt heim und staunt.', tint:'rgba(255,230,200,.1)'},
+  {t:'15:45', k:'at9', v:'t4', h:'Feierabend.', p:'Räder raus, Sonne tief. Freitags früher.', tint:'rgba(255,150,70,.28)', kin:1},
+].filter(d => IMG[d.k] || VID[d.v]);
+const shots = $('#shots'), day = $('#day');
+DAY.forEach(d => { const s = document.createElement('div'); s.className = 'shot';
+  if (VID[d.v]) s.innerHTML = `<video muted playsinline loop preload="metadata" src="${mobile() && VID[d.v].m ? VID[d.v].m : VID[d.v].d}"></video>`;
+  else s.innerHTML = `<img src="${mobile() ? IMG[d.k].m : IMG[d.k].d}" alt="${d.h}">`;
+  shots.appendChild(s); });
+day.style.height = Math.max(3, DAY.length) * 110 + 'vh';
+/* Ziffernblatt 06–16 Uhr als Bogen */
+const svg = $('#arcsvg'), R = 170, a0 = 200, a1 = 340; let s = '';
+const ang = m => a0 + (m - 360) / (960 - 360) * (a1 - a0); // Minuten seit 0 Uhr → Grad
+for (let h = 6; h <= 16; h++) for (let q = 0; q < 4 && !(h === 16 && q); q++) { const m = h * 60 + q * 15, a = ang(m) * Math.PI / 180, big = !q; const r1 = R - (big ? 18 : 9);
+  s += `<line class="tick ${big ? 'big' : ''}" x1="${Math.cos(a) * r1}" y1="${Math.sin(a) * r1}" x2="${Math.cos(a) * R}" y2="${Math.sin(a) * R}"/>`;
+  if (big) s += `<text x="${Math.cos(a) * (R - 40)}" y="${Math.sin(a) * (R - 40) + 5}" text-anchor="middle">${String(h).padStart(2, '0')}</text>`; }
+svg.innerHTML = s + '<line class="hand" id="hand" x1="0" y1="0" x2="0" y2="0"/>';
+const nav = $('#arcnav'); DAY.forEach((d, i) => { const a = document.createElement('a'); a.href = '#'; a.textContent = d.t; a.addEventListener('click', e => { e.preventDefault(); const top = day.offsetTop + (i + .5) / DAY.length * (day.offsetHeight - innerHeight); scrollTo({ top, behavior: 'smooth' }); }); nav.appendChild(a); });
+const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
+let cur = -1;
+function frame() {
+  const r = day.getBoundingClientRect(), p = Math.max(0, Math.min(1, -r.top / (day.offsetHeight - innerHeight)));
+  const f = p * DAY.length, i = Math.min(DAY.length - 1, Math.floor(f));
+  if (i !== cur && DAY[i]) { cur = i; const d = DAY[i];
+    $$('.shot', shots).forEach((x, j) => { x.classList.toggle('on', j === i); const v = $('video', x); if (v) j === i ? v.play().catch(() => {}) : v.pause(); });
+    $('#tH').textContent = d.h; $('#tP').textContent = d.p; $('#tint').style.background = d.tint;
+    $$('a', nav).forEach((a, j) => a.classList.toggle('on', j === i)); $('#kin').classList.toggle('in', !!d.kin); }
+  /* Uhrzeit läuft zwischen den Stationen mit */
+  if (DAY.length) { const a = DAY[i], b = DAY[Math.min(DAY.length - 1, i + 1)], k = f - i; const m = Math.round(toMin(a.t) + (toMin(b.t) - toMin(a.t)) * Math.max(0, (k - .6) / .4));
+    const hh = String(Math.floor(m / 60)).padStart(2, '0'), mm = String(m % 60).padStart(2, '0'); $('#time').innerHTML = `${hh}<b>:</b>${mm}`;
+    const an = ang(m) * Math.PI / 180, hd = $('#hand'); hd.setAttribute('x2', Math.cos(an) * (R + 14)); hd.setAttribute('y2', Math.sin(an) * (R + 14)); hd.setAttribute('x1', Math.cos(an) * (R - 30)); hd.setAttribute('y1', Math.sin(an) * (R - 30)); }
+  requestAnimationFrame(frame);
+}
+requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

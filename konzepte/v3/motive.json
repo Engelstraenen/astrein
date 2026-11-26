@@ -104,5 +104,46 @@
 "ref": "SB2",
 "res": "2K",
 "p": "Wide view of a modern clean carpentry workshop hall: CNC nesting router, sliding panel saw, edge banding machine, yellow dust extraction ducts along the ceiling, large skylights, two workers in black workwear in the distance, organised and bright, no clutter."
-}
+},
+"AL1": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 1) An empty solid wood workbench stands alone in the centre of a dark bordeaux stage under one warm spotlight, nothing on it, lots of dark space around, calm and promising."
+},
+"AL2": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 2) Month 2: the apprentice marks rough sawn walnut boards with a pencil and a steel square on the workbench, a few hand tools neatly beside her, warm workshop light."
+},
+"AL3": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 3) Month 8: the apprentice cuts a walnut board on a modern sliding panel saw (Formatkreissaege) with safety glasses and ear defenders, the saw guard and dust extraction hood visible, fine dust in the light."
+},
+"AL4": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 4) Month 14: the apprentice holds a tablet next to a modern CNC router that is cutting the cabinet back panel, finished carcass parts with wooden dowels lie ready on a cart in front."
+},
+"AL5": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 5) Month 20: the walnut cabinet carcass stands glued up in many parallel clamps on the workbench, the apprentice tightens the last clamp, glue squeeze-out visible at the joints."
+},
+"AL6": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 6) Month 28: the apprentice lays out bookmatched walnut veneer leaves like an opened book on the table of a veneer press, the mirrored grain forms a symmetrical pattern."
+},
+"AL7": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 7) Month 34: the apprentice wipes oil onto the finished walnut cabinet door with a cotton cloth, the grain glows deep and warm under the oil."
+},
+"AL8": {
+"ref": "L2",
+"res": "2K",
+"p": "(panel 8) Month 36: the finished tall two-door walnut cabinet with bookmatched doors on slim black steel legs stands alone on the dark bordeaux stage under a spotlight, the young woman stands proudly beside it with crossed arms, smiling."
+},
+"_common_L": "Use the reference storyboard sheet ONLY as look and colour reference. Create ONE single full-frame photorealistic 16:9 photograph, NOT a grid, NO panel numbers, NO text, NO timeline, NO UI, NO labels, NO logos. Full-frame camera, true colours, real textures, subtle film grain, not CGI, no plastic look. Deep bordeaux and walnut colour world, warm spotlight light. The apprentice is always the SAME young woman (about 20, dark brown hair in a ponytail, black slim workwear, safety glasses when at machines). The piece she builds is always the SAME tall two-door cabinet in American walnut with bookmatched veneer doors on slim black steel legs. No clichés (no carpenter hats, no guild clothing)."
 }
