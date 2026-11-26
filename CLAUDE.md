@@ -11,7 +11,7 @@ Probleme, die die Seite löst: Nachwuchs/Fachkräfte (Recruiting-Doppelkapitel F
 
 ## 3. Regeln für dieses Projekt
 - Leitmotiv eindeutig Tischler (Aufmaß mit Laser, Formatkreissäge, CNC, Schwalbenschwanz, Hobel, Zwingen, Einbau nach Maß), nichts DIY-Artiges.
-- Keine echten Firmen, keine Preise/Euro, kein Wort „KI“. Demo-Hinweis, Formulare senden nichts, `?firma=Name`.
+- Keine echten Firmen, keine Möbelpreise, kein Wort „KI“. Lohn/Ausbildungsvergütung dagegen transparent mit echten Tarifdaten + Quelle (Eugen 26.11.2026). Demo-Hinweis, Formulare senden nichts, `?firma=Name`.
 - Bewertungen nur als markierte Beispiele (erfundene Firma).
 - Alle Seiten mobil-optimiert, Prüfung in 4 Größen + Kopfzeile 1081–1600 px.
 
@@ -40,6 +40,8 @@ Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kos
 
 - 24.11.2026 (Eugen): Storyboard A2 bestätigt (konzepte/mix-a-2.jpg) = verbindliche Vorgabe. Nische als 2. Film-Kapitel auf der Hauptseite. Holzlabor dunkel (Tischplatte schwebt über 5 Holzscheiben). Motivliste konzepte/motive.md.
 - 24.11.2026: Bilder 2K kostenlos auf Dreamina (GPT Image 2.5 Sunburst, Unlimited, A2 als Referenz), Wächter `ASgo`/`AStick` in tools/dreamina_astrein.md. Dreamina-Unlimited = 1 Auftrag kontoweit.
+
+- 26.11.2026 (Eugen): Kompletter Neubau nach V2.79. Beruf cool verkaufen, cooles Team, Karriere-Unterpunkt mit Vorteilen Azubi + Fachkraft und offenem Lohn. 3 Storyboards V3 in konzepte/v3/ (Schichtuhr, Schublade, Crew).
 
 ## 10. Ablage
 Code: Dropbox/CLAUDE/Projekte/ASTREIN · Storyboards: konzepte/
