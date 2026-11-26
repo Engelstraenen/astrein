@@ -11,7 +11,9 @@ DQ.mentions = () => { const pm = DQ.pm(); if (!pm || !pm.editor) return -1; cons
 DQ.set = (txt) => { const ed = DQ.pm().editor; const c = (ed.getJSON().content || [])[0]; const ms = ((c && c.content) || []).filter(n => n.type !== 'text'); ed.commands.setContent({ type: 'doc', content: [{ type: 'paragraph', content: ms.concat([{ type: 'text', text: ' ' + txt }]) }] }); return ms.length; };
 DQ.bar = () => { const sw = [...document.querySelectorAll('[role=switch]')].find(e => e.offsetParent); if (!sw) return null; let c = sw; while (c && !/Sunburst/.test(c.innerText)) c = c.parentElement; if (!c) return null; const t = c.innerText.replace(/\s+/g, ' ').trim(); return { sw, c, t, price: (t.split('Unlimited')[1] || '').trim().split(' ')[0] }; };
 // eigener laufender Auftrag: Karten im Hauptbereich (links > 400 px) mit Warte-/Lauf-Text
-DQ.busy = () => [...document.querySelectorAll('*')].some(e => e.children.length === 0 && e.getBoundingClientRect().left > 400 && (/(Generating|Waiting in queue|High demand)/i.test(e.textContent || '') || /^\d{1,2}%$/.test((e.textContent || '').trim())));
+// Karten unten werden erst gerendert, wenn der Hauptbereich nach unten gescrollt ist (sonst meldet busy fälschlich frei)
+DQ.toBottom = () => [...document.querySelectorAll('*')].filter(e => e.scrollHeight > e.clientHeight + 200 && getComputedStyle(e).overflowY != 'visible' && e.getBoundingClientRect().left > 300).forEach(e => e.scrollTop = e.scrollHeight);
+DQ.busy = () => DQ.toBottom() || [...document.querySelectorAll('*')].some(e => e.children.length === 0 && e.getBoundingClientRect().left > 400 && (/(Generating|Waiting in queue|High demand)/i.test(e.textContent || '') || /^\d{1,2}%$/.test((e.textContent || '').trim())));
 DQ.go = async () => {
   const b = DQ.bar(); if (!b) return 'NOBAR';
   if (b.sw.getAttribute('aria-checked') !== 'true') return 'SWITCH-OFF';
