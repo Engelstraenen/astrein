@@ -12,7 +12,9 @@
 <style>
 /* Unterseite „Ein Tag“: helle CI-Variante (Creme-Grund, Bordeaux-Akzent) */
 body.tag{--bg:#f0e2c8;--bg-rgb:240,226,200;--bg2:#e6d4b3;--bg3:#f6ecd9;--cr:#2a0f14;--cr-rgb:42,15,20;--cr2:rgba(42,15,20,.74);--cr3:rgba(42,15,20,.5);--line:rgba(42,15,20,.16);--or:#7a1e2b;--on-or:#f6ecd9;--acc:#8e2433}
-.tag .hdr.solid{background:rgba(240,226,200,.9)}
+.tag .hdr.solid{background:rgba(240,226,200,.94)}
+.tag .hdr:not(.solid){--cr:#f6ecd9;--cr2:rgba(246,236,217,.82);--cr3:rgba(246,236,217,.6)}
+@media (max-width:1240px){.tag .hdr:not(.solid) .burger i{background:#f6ecd9}.tag .menu{--cr:#2a0f14;--cr2:rgba(42,15,20,.74)}.tag.open .hdr .burger i{background:#2a0f14}}
 #day{height:1000vh;position:relative}
 #day .pin{background:#1a0d0f}
 .shot{position:absolute;inset:0;opacity:0;transition:opacity .9s}
