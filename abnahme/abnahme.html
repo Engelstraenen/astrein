@@ -1,0 +1,103 @@
+<title>ASTREIN Abnahme</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: eine Spalte, je Storyboard-Panel ein Band: Storyboard | Laptop | Handy, darunter eine Zeile Abweichung */
+:root{
+  --bg:#f4ede2; --panel:#fbf7f0; --line:#e0d4c3; --fg:#2a0f14; --mut:#6f5a50; --acc:#7a1e2b; --ok:#3f6b3a; --warn:#a2611a;
+  --f-d:"Fraunces",Georgia,serif; --f-b:"Inter Tight",system-ui,sans-serif; --f-m:"JetBrains Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#1d0a0e;--panel:#2a1015;--line:#45242a;--fg:#f0e2c8;--mut:#bba892;--acc:#f3c27a;--ok:#9bc98f;--warn:#f0b36a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#1d0a0e;--panel:#2a1015;--line:#45242a;--fg:#f0e2c8;--mut:#bba892;--acc:#f3c27a;--ok:#9bc98f;--warn:#f0b36a;color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.55 var(--f-b);margin:0}
+.wrap{max-width:1500px;margin:0 auto;padding-block:32px 72px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:44px}
+h1,h2,h3{font-family:var(--f-d);font-weight:600;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1{font-size:clamp(34px,5vw,60px);line-height:1}
+h2{font-size:clamp(26px,3vw,38px);line-height:1.05}
+h3{font-size:20px}
+.top{display:grid;gap:16px}
+.status{display:flex;flex-wrap:wrap;gap:8px}
+.pill{border:1px solid var(--line);background:var(--panel);padding:7px 12px;font:500 13px/1.3 var(--f-m);border-radius:999px}
+.pill.ok{color:var(--ok)}.pill.warn{color:var(--warn)}
+.links{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center}
+.links a{color:var(--acc);font-weight:600}
+.page{display:grid;gap:26px;padding-top:30px;border-top:2px solid var(--fg)}
+.ch{display:grid;gap:12px;padding-top:22px;border-top:1px solid var(--line)}
+.ch-h{display:flex;gap:14px;align-items:baseline;flex-wrap:wrap}
+.ch-h .n{font:600 13px/1 var(--f-m);color:var(--acc);letter-spacing:.1em}
+.grid{display:grid;grid-template-columns:1fr 1fr .32fr;gap:14px;align-items:start}
+@media (max-width:860px){.grid{grid-template-columns:1fr}}
+figure{margin:0;display:grid;gap:6px;min-width:0}
+figure img{width:100%;height:auto;display:block;border:1px solid var(--line);cursor:zoom-in;background:#000;border-radius:4px}
+figcaption{font:500 12px/1.3 var(--f-m);color:var(--mut);text-transform:uppercase;letter-spacing:.08em}
+.note{font-size:15px;background:var(--panel);border-left:3px solid var(--ok);padding:10px 14px;max-width:90ch}
+.note.warn{border-left-color:var(--warn)}
+pre{background:var(--panel);border:1px solid var(--line);padding:14px;overflow-x:auto;font:13px/1.5 var(--f-m);margin:0}
+button{font:600 14px var(--f-b);min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--fg);background:transparent;color:var(--fg);cursor:pointer}
+.lb{position:fixed;inset:0;background:rgba(10,4,5,.92);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+.lb img{max-width:100%;max-height:100%;object-fit:contain}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+<div class="wrap">
+  <header class="top">
+    <p class="pill" style="justify-self:start">Tischlerei ASTREIN · Demo-Seite · Stand <span id="stand"></span></p>
+    <h1>Abnahme: Storyboard neben fertiger Seite</h1>
+    <div class="links"><a href="https://engelstraenen.github.io/astrein/" target="_blank" rel="noopener">Seite öffnen</a><a href="https://engelstraenen.github.io/astrein/lernen.html" target="_blank" rel="noopener">Was du lernst</a><a href="https://engelstraenen.github.io/astrein/tag.html" target="_blank" rel="noopener">Ein Tag bei uns</a><a href="https://github.com/Engelstraenen/astrein" target="_blank" rel="noopener">GitHub</a></div>
+    <div class="status" id="status"></div>
+  </header>
+  <main id="pages"></main>
+  <section class="ch">
+    <h2>Einbetten (projektex.de)</h2>
+    <pre id="embed">&lt;iframe src="https://engelstraenen.github.io/astrein/" style="width:100%;height:100vh;border:0" loading="lazy" title="Tischlerei ASTREIN"&gt;&lt;/iframe&gt;</pre>
+    <div><button id="copy" type="button">Code kopieren</button></div>
+  </section>
+</div>
+<div class="lb" id="lb" hidden><img id="lbimg" alt=""></div>
+<script>
+const STAND = '26.11.2026';
+const STATUS = [['ok','38 Startbilder'],['warn','Filme: 2 von 10'],['ok','Handy geprüft: 4 Größen'],['ok','0 Konsolenfehler'],['ok','alles kostenlos (Unlimited)']];
+const PAGES = [
+ {key:'haupt', title:'Hauptseite „Die Schublade“', sb:'Storyboard 2', p:[
+  ['Kommode, oberste Schublade glimmt','ok','Wie Panel 1. Beim Scrollen fährt die Schublade auf (Film 1), dann warme Blende in Schublade 1.'],
+  ['Holzproben in der Schublade','ok','Wie Panel 2. Das Diagramm im Storyboard hatte erfundene Zahlen, auf der Seite stehen echte Brinell-Werte mit Quelle.'],
+  ['Hirnholz-Makro','warn','Wie Panel 3, wirkt aber noch künstlich (Würfel mit Löchern). Neues, echtes Makro rendert gerade.'],
+  ['Laser-Aufmaß','warn','Schublade mit Lasermessgerät + Tablet, dann Laser in der Treppennische wie Panel 4. Film dazu folgt.'],
+  ['CNC-Fräsbahnen','ok','Wie Panel 5: Fräsbahnen zeichnen sich als Linien, dann spult Film 2 (CNC).'],
+  ['Team + Namensschilder','ok','Wie Panel 6. Namen stehen auf den Schildern in der Schublade, danach das Team zum Antippen.'],
+  ['Deine Vorteile','ok','Wie Panel 7, die Karten zeigen echte Tariflöhne (Berlin 2026). Darunter Lohnrechner und Bewerbung in 60 s.'],
+  ['Stimmen','ok','Wie Panel 8 als Postkarten in einer Schublade, jede als „Beispiel“ markiert (erfundene Firma).'],
+  ['Handy-Ansicht','ok','Kommoden-Navigation als Leiste unten statt Liste oben (Panel 9), Anfrage mit A4-Foto-Maßstab.']]},
+ {key:'tag', title:'Unterseite „Ein Tag bei uns“', sb:'Storyboard 1', p:[
+  ['06:58 Licht an','ok','Wie Panel 1, Uhr-Bogen rechts ist die Navigation.'],
+  ['07:30 CNC','ok','Wie Panel 2.'],
+  ['09:00','warn','Panel 3 zeigte Laser-Aufmaß. Das steht schon auf der Hauptseite, hier deshalb „Raus zum Kunden“ (Transporter beladen).'],
+  ['10:30','warn','Panel 4 zeigte die Furnierpresse (steht auf der Hauptseite), hier Schleifen mit Absaugung.'],
+  ['12:00 Mittag','ok','Wie Panel 5.'],
+  ['13:30','warn','Panel 6 zeigte die Musterwand (ist das Holzlabor der Hauptseite), hier zeigt die Meisterin der Azubi eine Verbindung.'],
+  ['14:30 Montage','ok','Wie Panel 7, beim Kunden (Küche).'],
+  ['15:45 Feierabend','ok','Wie Panel 8 mit Kinetik-Wörtern „Ausbildung. Lohn offen. Team.“'],
+  ['Handy','ok','Wie Panel 9, Bewerbung in 60 Sekunden.']]},
+ {key:'lernen', title:'Unterseite „Was du lernst“', sb:'Storyboard L2', p:[
+  ['Drei Jahre. Ein Stück.','ok','Wie Panel 1, Zeitstrahl zum Ziehen oder Scrollen.'],
+  ['Monat 2 Anreißen','ok','Wie Panel 2. Meli ist durchgehend dieselbe Azubi.'],
+  ['Monat 8 Sägen','ok','Wie Panel 3.'],
+  ['Monat 14 CNC','ok','Wie Panel 4.'],
+  ['Monat 20 Verbinden','ok','Wie Panel 5, dazu der Hinweis auf die Zwischenprüfung.'],
+  ['Monat 28 Furnieren','ok','Wie Panel 6.'],
+  ['Monat 34 Ölen','ok','Wie Panel 7.'],
+  ['Monat 36 Gesellin','ok','Wie Panel 8, mit echten Prüfungsdaten (TischlAusbV § 9).'],
+  ['Handy','ok','Wie Panel 9.']]},
+];
+document.getElementById('stand').textContent = STAND;
+document.getElementById('status').innerHTML = STATUS.map(([c,t])=>`<span class="pill ${c}">${t}</span>`).join('');
+document.getElementById('pages').innerHTML = PAGES.map(pg=>`<section class="page"><h2>${pg.title}</h2><p class="pill" style="justify-self:start">verglichen mit ${pg.sb}</p>`+pg.p.map(([t,c,n],i)=>`<article class="ch"><div class="ch-h"><span class="n">PANEL ${i+1}</span><h3>${t}</h3></div><div class="grid">
+<figure><img loading="lazy" src="${pg.key}-${i+1}-storyboard.jpg" alt="Storyboard Panel ${i+1}: ${t}"><figcaption>Storyboard</figcaption></figure>
+<figure><img loading="lazy" src="${pg.key}-${i+1}-desktop.jpg" alt="Seite am Laptop: ${t}"><figcaption>Laptop 1600 px</figcaption></figure>
+<figure><img loading="lazy" src="${pg.key}-${i+1}-handy.jpg" alt="Seite am Handy: ${t}"><figcaption>Handy 390 px</figcaption></figure></div>
+<p class="note ${c==='warn'?'warn':''}">${n}</p></article>`).join('')+`</section>`).join('');
+const lb = document.getElementById('lb'), li = document.getElementById('lbimg');
+document.addEventListener('click', e => { const im = e.target.closest('figure img'); if (im) { li.src = im.src; li.alt = im.alt; lb.hidden = false; } else if (!lb.hidden) lb.hidden = true; });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.hidden = true; });
+document.getElementById('copy').addEventListener('click', async e => { const t = document.getElementById('embed').textContent; try { await navigator.clipboard.writeText(t); e.target.textContent = 'Kopiert'; } catch { const r = document.createRange(); r.selectNodeContents(document.getElementById('embed')); const s = getSelection(); s.removeAllRanges(); s.addRange(r); e.target.textContent = 'Markiert – jetzt kopieren'; } });
+</script>
