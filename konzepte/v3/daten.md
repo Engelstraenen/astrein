@@ -12,3 +12,7 @@
 - Differentielles Schwindmaß je 1 % Holzfeuchte (radial/tangential, %): Fichte 0,19/0,36 · Kiefer 0,19/0,36 · Eiche 0,18/0,34 · Buche 0,20/0,41 (TUM-Skript https://webarchiv.typo3.tum.de/ED/ARC/ls-ebb/fileadmin/w00cgv/ebb/Scripten_Allgemein/Holz_Eigenschaften_Merkmale.pdf – Spalten vor Bau im Original prüfen). Esche/Ahorn ebenfalls in der Tabelle.
 - Rechner-Beispiel: 90 cm Eichenplatte, Raumklima ändert Holzfeuchte 8 → 12 % (4 %): tangential 0,34 × 4 = 1,36 % → ca. 12 mm Breitenänderung (Plattenbreite liegt meist tangential/gemischt).
 - Trocknung/Ziel-Holzfeuchte Möbel (noch belegen).
+
+## FESTGELEGT für die Demo: Tarifgebiet Berlin (eine Quelle, alles konsistent)
+- Ausbildungsvergütung Tischlerhandwerk Berlin ab 01.01.2026: 1. LJ 810 €, 2. LJ 900 €, 3. LJ 1.050 € (Senatsverwaltung Berlin, Ausbildungsvergütungen Stand 08/2026)
+- Entgelt Berlin ab 01.01.2026 (Std.): EG1 12,82 (Mindestlohn) · EG2 13,75 · EG3.1 Geselle ohne Erfahrung 14,76 · EG3.2 nach 12 Monaten 16,12 · EG3.3 Geselle Eckentgelt 16,97 · EG4 18,67 · EG5 21,21 (Teamleitung/Meister ohne Erfahrung) · EG6 23,76 (CNC-Fachkraft, Techniker, Meister mit Erfahrung) · EG7 26,30 · EG8 29,70 (Meister mit Leitung). 38,5 h/Woche, Monat = 167,5 h → Eckentgelt 2.842,48 €. Leistungssonderzahlung 40/50/100 % (13. Gehalt). Mehrarbeit +25 %, Samstag +25 %. Quelle: Tarifbroschüre Tischlerhandwerk Berlin ab 01/2026.

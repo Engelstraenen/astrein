@@ -10,7 +10,7 @@ window.AVset = (t) => { const ta = [...document.querySelectorAll('textarea')].fi
 window.ASbar = () => { const sw = [...document.querySelectorAll('[role=switch]')].find(e => e.offsetParent); if (!sw) return null; let c = sw; for (let k = 0; k < 5; k++) c = c.parentElement; return { sw, c, price: String(parseInt(c.innerText.replace(/\s+/g, ' ').trim().split(' ')[1], 10)) }; };
 window.ASbusyN = () => (document.body.innerText.match(/run up to 1 generation/gi) || []).length;
 // Nur Hauptbereich (Seitenleiste zeigt „Generating“ fremder Sitzungen)
-window.ASrunning = () => [...document.querySelectorAll('*')].some(e => e.children.length === 0 && /Waiting in queue|Generating\.\.\.|^\d{1,2}%$/.test((e.textContent || '').trim()) && e.getBoundingClientRect().left > 400);
+window.ASrunning = () => [...document.querySelectorAll('*')].some(e => { if (e.children.length !== 0 || !/Waiting in queue|Generating\.\.\.|^\d{1,2}%$/.test((e.textContent||'').trim())) return false; let c=e; for (let k=0;k<8 && c;k++){ c=c.parentElement; if (c && /Generative sessions|Past sessions/.test(c.innerText||'')) return false; if (c && /Edit prompt|Cancel generation|Details/.test(c.innerText||'')) return true; } return false; });
 window.ASgo = async () => { if (ASrunning()) return 'QUEUE';
   const b = ASbar(); if (!b) return 'NO SWITCH'; if (b.sw.getAttribute('aria-checked') !== 'true') return 'SWITCH OFF'; if (b.price !== '0') return 'PRICE ' + b.price;
   const g = [...b.c.querySelectorAll('button')].filter(x => x.offsetParent).pop(); if (!g || g.disabled) return 'NO BUTTON';

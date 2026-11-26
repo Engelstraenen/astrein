@@ -1,0 +1,2 @@
+window.IMG={};
+window.VID={};
