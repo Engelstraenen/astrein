@@ -26,16 +26,18 @@
 .gstxt ul{list-style:none;margin-top:18px;display:grid;gap:6px;font-size:clamp(15px,1.25vw,18px);color:var(--cr2)}
 .gstxt li::before{content:"— ";color:var(--glow)}
 .gstxt .note{margin-top:14px;font:13px/1.5 var(--mono);color:var(--cr3)}
-.tl{position:absolute;z-index:4;left:var(--gut);right:calc(var(--gut) + 70px);bottom:84px;height:64px;touch-action:none;cursor:grab}
+.tl{position:absolute;z-index:4;left:var(--gut);right:calc(var(--gut) + 90px);bottom:84px;height:64px;touch-action:none;cursor:grab}
 .tl:active{cursor:grabbing}
 .tl .rail{position:absolute;left:0;right:0;top:30px;height:2px;background:rgba(240,226,200,.22)}
 .tl .fillr{position:absolute;left:0;top:30px;height:2px;background:var(--glow)}
-.tl .yr{position:absolute;top:44px;font:500 13px/1 var(--mono);color:var(--cr2);transform:translateX(-50%)}
+.tl .yr{position:absolute;top:44px;font:500 13px/1 var(--mono);color:var(--cr2);transform:translateX(-50%);white-space:nowrap}
+.tl .yr:first-of-type{transform:none}.tl .yr:last-of-type{transform:translateX(-100%)}
+.tl .yr:first-of-type::before{left:0}.tl .yr:last-of-type::before{left:100%}
 .tl .yr::before{content:"";position:absolute;left:50%;top:-18px;width:1px;height:10px;background:rgba(240,226,200,.5)}
 .tl .ms{position:absolute;top:24px;width:14px;height:14px;margin-left:-7px;border-radius:50%;border:2px solid var(--cr3);background:#160709;transition:.3s}
 .tl .ms.done{border-color:var(--glow);background:var(--glow)}
 .tl .knob{position:absolute;top:13px;width:36px;height:36px;margin-left:-18px;border-radius:50%;background:var(--cr);box-shadow:0 0 0 8px rgba(240,226,200,.15),0 8px 20px rgba(0,0,0,.4);display:grid;place-items:center;font:600 11px/1 var(--mono);color:var(--on-or)}
-.drag{position:absolute;z-index:4;right:var(--gut);bottom:100px;font:12px/1.3 var(--mono);color:var(--cr3);text-align:right}
+.drag{position:absolute;z-index:4;right:var(--gut);bottom:170px;font:12px/1.3 var(--mono);color:var(--cr3);text-align:right}
 .exam{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
 @media (max-width:900px){.exam{grid-template-columns:1fr}.tl{right:var(--gut);bottom:110px}.drag{display:none}.gstxt{top:auto;bottom:200px}.gstxt h1{font-size:clamp(44px,13vw,80px)}.gstxt ul{font-size:15px}}
 @media (max-height:560px){.gstxt{top:calc(var(--hdr) + 8px)}.gstxt h1{font-size:44px}.gstxt ul{display:none}.tl{bottom:56px}}

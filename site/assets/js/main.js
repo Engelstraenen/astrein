@@ -105,7 +105,9 @@ TEAM.forEach(p => { const b = document.createElement('span'); b.className = 'bad
   const d = document.createElement('div'); d.className = 'person'; d.innerHTML = `<div class="pc"><b>${p.n[0] + p.n.slice(1).toLowerCase()}</b>${p.role}<br>${p.t}</div><button>${p.n[0] + p.n.slice(1).toLowerCase()}</button>`; $('button', d).addEventListener('click', () => { $$('.person').forEach(x => x !== d && x.classList.remove('open')); d.classList.toggle('open'); }); people.appendChild(d); });
 function layoutTeam() {
   if (teamA && !teamA.hidden) { const [x0] = coverXY(teamA, 0, 0), [x1] = coverXY(teamA, 100, 0), iw = x1 - x0; $$('.badge', badges).forEach((b, i) => { const [x, y] = coverXY(teamA, TEAM[i].x, TEAM[i].y); b.style.left = x + 'px'; b.style.top = y + 'px'; b.style.fontSize = Math.max(11, iw * 0.0125) + 'px'; }); }
-  if (teamB && !teamB.hidden) $$('.person', people).forEach((d, i) => { const [x, y] = coverXY(teamB, TEAM[i].px, 62); d.style.left = x + 'px'; d.style.top = Math.min(y, innerHeight - 140) + 'px'; });
+  const row = innerWidth < 900 && innerHeight > innerWidth; people.classList.toggle('row', row);
+  if (row && teamB && !teamB.hidden) { const [, yb] = coverXY(teamB, 0, 100); people.style.top = (yb + 14) + 'px'; } else people.style.top = '';
+  if (!row && teamB && !teamB.hidden) $$('.person', people).forEach((d, i) => { const [x, y] = coverXY(teamB, TEAM[i].px, 62); d.style.left = x + 'px'; d.style.top = Math.min(y, innerHeight - 140) + 'px'; });
 }
 /* Lohnkarten in Schublade 5 (Tarif Berlin 2026) */
 const PAYL = [['Azubi · 1. Jahr', '810 €', 32, 35.6], ['Azubi · 2. Jahr', '900 €', 50, 35.6], ['Azubi · 3. Jahr', '1.050 €', 68.1, 35.6], ['Geselle', '16,97 €/h', 30.9, 57.6], ['CNC-Fachkraft', '23,76 €/h', 50, 57.6], ['Meister', 'bis 29,70 €/h', 69, 57.6]];
