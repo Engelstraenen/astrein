@@ -13,7 +13,9 @@
 /* Unterseite „Ein Tag bei uns“: gleiche CI wie die Hauptseite (Bordeaux, Creme, Glut-Gold), ein durchgehender Film zum Scrollen */
 #day{height:900vh;position:relative}
 #day .pin{background:var(--bg2)}
-#film{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+#films{position:absolute;inset:0}
+#films video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}
+#films video.on{opacity:1}
 .veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(var(--bg-rgb),.86),rgba(var(--bg-rgb),.25) 48%,rgba(var(--bg-rgb),0) 70%),linear-gradient(0deg,rgba(var(--bg-rgb),.55),rgba(var(--bg-rgb),0) 35%)}
 .clock{position:absolute;z-index:4;left:var(--gut);top:calc(var(--hdr) + 3vh);max-width:min(640px,46vw)}
 .clock .back{display:inline-flex;align-items:center;min-height:44px;color:var(--cr2);font:500 13px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;text-decoration:none}
@@ -76,7 +78,7 @@
 <main>
 <section id="day" class="stage">
   <div class="pin">
-    <video id="film" muted playsinline preload="auto" aria-label="Film: ein Arbeitstag in der Tischlerei von 06:58 bis 15:45"></video>
+    <div id="films" role="img" aria-label="Film: ein Arbeitstag in der Tischlerei von 06:58 bis 15:45"></div>
     <div class="veil"></div>
     <div class="arc" aria-hidden="true"><svg viewBox="-200 -200 400 400" id="arcsvg"></svg></div>
     <div class="kin" id="kin" aria-hidden="true"><span>Ausbildung.</span><span>Lohn offen.</span><span>Team.</span></div>
@@ -119,8 +121,8 @@
 <script>
 (() => {
 const {$, $$, VID, mobile} = window.SUB;
-/* Ein Film, neun Stationen à 5 s mit 0,6 s Überblendung (tools/tagfilm.py) */
-const SEG = 5, XF = .6, STEP = SEG - XF;
+/* Neun Stationen à 5 s, je eine eigene 4K-Datei tag1…tag9 (tools/tagfilm.py); die Seite blendet weich über */
+const SEG = 5, XF = .6, STEP = SEG;
 const DAY = [
   {t:'06:58', h:'Licht an.', p:'Die Halle ist noch blau. Kaffee in der Hand, die Absaugung läuft an.', f:'Arbeitsbeginn 07:00 · 38,5 h/Woche'},
   {t:'07:15', h:'Fünf Minuten Plan.', p:'Wer fräst, wer furniert, wer fährt raus? Alle wissen, was heute passiert.', f:'Jeden Morgen · alle am Bildschirm'},
@@ -132,9 +134,9 @@ const DAY = [
   {t:'14:30', h:'Die Küche hängt.', p:'Front einhängen, ausrichten, Fuge prüfen. Der Kunde kommt heim und staunt.', f:'Fuge 3 mm · überall gleich'},
   {t:'15:45', h:'Feierabend.', p:'Räder raus, Sonne tief. Freitags früher.', f:'Freitag 13:00 Schluss', kin:1},
 ];
-const day = $('#day'), film = $('#film'), nav = $('#arcnav'), cards = $('#cards');
-const src = VID.tag ? (mobile() && VID.tag.m ? VID.tag.m : VID.tag.d) : null;
-if (src) { film.src = src; if (VID.tag.poster) film.poster = VID.tag.poster; }
+const day = $('#day'), nav = $('#arcnav'), cards = $('#cards');
+const films = DAY.map((d, i) => { const v = document.createElement('video'), e = VID['tag' + (i + 1)]; v.muted = true; v.playsInline = true; v.preload = i < 2 ? 'auto' : 'metadata'; if (e) { v.src = mobile() && e.m ? e.m : e.d; if (e.poster) v.poster = e.poster; } $('#films').appendChild(v); return v; });
+const film = films[0];
 cards.innerHTML = DAY.map((d, i) => `<div class="card"><p class="eyebrow">Station ${i + 1} von ${DAY.length}</p><h2>${d.h}</h2><p>${d.p}</p><span class="fact">${d.f}</span></div>`).join('');
 /* Uhr-Bogen 06–16 Uhr */
 const svg = $('#arcsvg'), R = 170, a0 = 200, a1 = 340; let s = '';
@@ -145,19 +147,19 @@ for (let h = 6; h <= 16; h++) for (let q = 0; q < 4 && !(h === 16 && q); q++) { 
 svg.innerHTML = s + '<path class="done" id="done"/><line class="hand" id="hand"/><circle class="dot" id="dot" r="6"/>';
 const toMin = t => { const [h, m] = t.split(':').map(Number); return h * 60 + m; };
 const span = () => day.offsetHeight - innerHeight;
-DAY.forEach((d, i) => { const a = document.createElement('a'); a.href = '#'; a.textContent = d.t; a.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: day.offsetTop + (i * STEP + SEG / 2) / (DAY.length * STEP + XF) * span(), behavior: 'smooth' }); }); nav.appendChild(a); });
+DAY.forEach((d, i) => { const a = document.createElement('a'); a.href = '#'; a.textContent = d.t; a.addEventListener('click', e => { e.preventDefault(); scrollTo({ top: day.offsetTop + (i + .5) / DAY.length * span(), behavior: 'smooth' }); }); nav.appendChild(a); });
 /* Film läuft beim Laden kurz von selbst an (Aktion ab Sekunde 1), dann spult das Scrollen */
 let auto = 0, autoT0 = performance.now(), cur = -1, shown = 0;
 film.addEventListener('loadedmetadata', () => { autoT0 = performance.now(); });
 function frame(now) {
-  const dur = film.duration || DAY.length * STEP + XF, r = day.getBoundingClientRect();
+  const dur = DAY.length * SEG, r = day.getBoundingClientRect();
   const p = Math.max(0, Math.min(1, -r.top / span()));
   auto = Math.min(1.4, (now - autoT0) / 1000 * .9);
   const t = Math.min(dur - .05, Math.max(p * dur, p < .02 ? auto : 0));
-  if (film.readyState >= 1 && Math.abs(t - film.currentTime) > .04) { film.currentTime = film.currentTime + (t - film.currentTime) * .35; }
+  const i = Math.min(DAY.length - 1, Math.floor(t / SEG)), v = films[i], lt = Math.min(SEG - .05, t - i * SEG);
+  if (v.readyState >= 1 && Math.abs(lt - v.currentTime) > .04) v.currentTime = v.currentTime + (lt - v.currentTime) * .35;
   shown = t;
-  const i = Math.min(DAY.length - 1, Math.floor(t / STEP));
-  if (i !== cur) { cur = i; $$('.card', cards).forEach((c, j) => c.classList.toggle('on', j === i)); $$('a', nav).forEach((a, j) => a.classList.toggle('on', j === i)); $('#kin').classList.toggle('in', !!DAY[i].kin); }
+  if (i !== cur) { cur = i; films.forEach((f, j) => { f.classList.toggle('on', j === i); if (Math.abs(j - i) <= 1 && f.preload !== 'auto') { f.preload = 'auto'; f.load(); } }); $$('.card', cards).forEach((c, j) => c.classList.toggle('on', j === i)); $$('a', nav).forEach((a, j) => a.classList.toggle('on', j === i)); $('#kin').classList.toggle('in', !!DAY[i].kin); }
   /* Uhr läuft mit dem Film: innerhalb einer Station von ihrer Zeit zur nächsten */
   const b = DAY[Math.min(DAY.length - 1, i + 1)], k = Math.max(0, Math.min(1, (t - i * STEP) / STEP));
   const m = Math.round(toMin(DAY[i].t) + (toMin(b.t) - toMin(DAY[i].t)) * k);

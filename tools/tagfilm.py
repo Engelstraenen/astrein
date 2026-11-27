@@ -2,7 +2,7 @@
 """„Ein Tag bei uns“ als EIN Storytelling-Film zum Scrollen.
 Je Station (AT1–AT9) 5 s: fertiger Dreamina-Clip assets-roh/v3/vid/ta<N>.mp4, sonst (Übergang) langsame Kamerafahrt
 ins Startbild assets-roh/v3/2k/at<N>.png. Stationen gehen per 0,6-s-Überblendung ineinander über.
-Ergebnis: assets-roh/v3/vid/tagfilm.mp4 → danach tools/video3.py … tag --scrub und tools/assets3.py.
+Ergebnis: site/assets/vid/tag1…tag9 (+ -m, -poster) → danach tools/assets3.py.
 Seite rechnet mit SEG=5, XF=0.6 (tag.html)."""
 import os, subprocess
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -22,10 +22,8 @@ for i in range(1, N + 1):
         subprocess.run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-i', os.path.join(RAW, '2k', f'at{i}.png'), '-vf', vf, '-frames:v', str(fr),
                         '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', out], check=True)
     segs.append(out)
-inp = sum((['-i', s] for s in segs), [])
-fc, last = [], '[0:v]'
-for k in range(1, N):
-    o = f'[x{k}]'; fc.append(f'{last}[{k}:v]xfade=transition=fade:duration={XF}:offset={k * (SEG - XF):.2f}{o}'); last = o
-dst = os.path.join(RAW, 'vid', 'tagfilm.mp4')
-subprocess.run(['ffmpeg', '-y', '-v', 'error'] + inp + ['-filter_complex', ';'.join(fc), '-map', last, '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', dst], check=True)
+# Web: je Station eine eigene 4K-Datei tag1…tag9 (All-Intra), die Seite blendet zwischen ihnen über.
+# Ein einzelner 45-s-4K-All-Intra-Film wäre über 200 MB (GitHub-Grenze 100 MB je Datei).
+for k, seg in enumerate(segs, 1):
+    subprocess.run(['python3', os.path.join(ROOT, 'tools', 'video3.py'), seg, f'tag{k}', '--scrub'], check=True)
 print('tagfilm', len(echt), 'echte Clips', echt, '·', N - len(echt), 'Kamerafahrten')
