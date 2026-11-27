@@ -37,8 +37,9 @@ vid = {}
 if os.path.isdir(VOUT):
     for f in sorted(os.listdir(VOUT)):
         if f.endswith('.mp4') and not f.endswith('-m.mp4'):
-            k = f[:-4]; e = {'d': 'assets/vid/' + f}
-            if os.path.exists(os.path.join(VOUT, k + '-m.mp4')): e['m'] = 'assets/vid/' + k + '-m.mp4'
+            k = f[:-4]; v = '?v=%d' % int(os.path.getmtime(os.path.join(VOUT, f)))  # V2.85: Version gegen Browser-Cache
+            e = {'d': 'assets/vid/' + f + v}
+            if os.path.exists(os.path.join(VOUT, k + '-m.mp4')): e['m'] = 'assets/vid/' + k + '-m.mp4' + v
             if os.path.exists(os.path.join(VOUT, k + '-poster.jpg')): e['poster'] = 'assets/vid/' + k + '-poster.jpg'
             vid[k] = e
 open(os.path.join(ROOT, 'site', 'assets', 'js', 'media.js'), 'w').write('window.IMG=' + json.dumps(img) + ';\nwindow.VID=' + json.dumps(vid) + ';\n')

@@ -13,9 +13,10 @@ w, h = (int(x) for x in subprocess.check_output(['ffprobe', '-v', 'error', '-sel
 pts = f'setpts={1/speed:.4f}*PTS,' if speed != 1 else ''
 big = w >= 3000  # 4K-Master (aus 720p hochgerechnet): Desktop volle 3840, Handy 1440x1920
 sharp = 'unsharp=5:5:0.5' if big else 'unsharp=5:5:0.7'
-G = a[a.index('--gop') + 1] if '--gop' in a else '1'  # lange Scroll-Filme: --gop 8 hält die Datei klein
+G = a[a.index('--gop') + 1] if '--gop' in a else '1'
+if big and scrub: G = '1'  # V2.85: 4K-Scroll-Filme nur All-Intra (sonst Blockfehler beim Spulen in Chrome/Mac)
 gop = ['-g', G, '-keyint_min', G, '-sc_threshold', '0', '-bf', '0'] if scrub else ['-g', '48']
-base = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', ('23' if '--gop' in a else '20') if scrub else '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-r', '30'] + gop
+base = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', ('26' if big else ('23' if '--gop' in a else '20')) if scrub else '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-r', '30'] + gop
 d = os.path.join(OUT, key + '.mp4'); m = os.path.join(OUT, key + '-m.mp4')
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', src, '-vf', f'{pts}{sharp}'] + base + [d], check=True)
 cw = min(w, round(h * 3 / 4)) // 2 * 2
