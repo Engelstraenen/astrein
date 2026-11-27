@@ -11,13 +11,15 @@ scrub = '--scrub' in a
 speed = float(a[a.index('--speed') + 1]) if '--speed' in a else 1.0
 w, h = (int(x) for x in subprocess.check_output(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height', '-of', 'csv=p=0', src]).decode().strip().split(',')[:2])
 pts = f'setpts={1/speed:.4f}*PTS,' if speed != 1 else ''
-sharp = 'unsharp=5:5:0.7'
+big = w >= 3000  # 4K-Master (aus 720p hochgerechnet): Desktop volle 3840, Handy 1440x1920
+sharp = 'unsharp=5:5:0.5' if big else 'unsharp=5:5:0.7'
 G = a[a.index('--gop') + 1] if '--gop' in a else '1'  # lange Scroll-Filme: --gop 8 hält die Datei klein
 gop = ['-g', G, '-keyint_min', G, '-sc_threshold', '0', '-bf', '0'] if scrub else ['-g', '48']
 base = ['-an', '-c:v', 'libx264', '-preset', 'slow', '-crf', ('23' if '--gop' in a else '20') if scrub else '22', '-pix_fmt', 'yuv420p', '-movflags', '+faststart', '-r', '30'] + gop
 d = os.path.join(OUT, key + '.mp4'); m = os.path.join(OUT, key + '-m.mp4')
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', src, '-vf', f'{pts}{sharp}'] + base + [d], check=True)
 cw = min(w, round(h * 3 / 4)) // 2 * 2
-subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', src, '-vf', f'{pts}crop={cw}:{h}:(iw-{cw})/2:0,{sharp}'] + base + [m], check=True)
+msc = ',scale=1440:1920:flags=lanczos' if big else ''
+subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', src, '-vf', f'{pts}crop={cw}:{h}:(iw-{cw})/2:0{msc},{sharp}'] + base + [m], check=True)
 subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', d, '-frames:v', '1', '-q:v', '3', os.path.join(OUT, key + '-poster.jpg')], check=True)
 print(key, w, 'x', h, 'scrub' if scrub else 'loop', os.path.getsize(d) // 1024, 'KB')

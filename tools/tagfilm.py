@@ -11,13 +11,14 @@ TMP = os.path.join(RAW, 'vid', '_tag'); os.makedirs(TMP, exist_ok=True)
 SEG, XF, FPS, N = 5.0, 0.6, 30, 9
 segs, echt = [], []
 for i in range(1, N + 1):
-    out = os.path.join(TMP, f's{i}.mp4'); clip = os.path.join(RAW, 'vid', f'ta{i}.mp4')
+    out = os.path.join(TMP, f's{i}.mp4'); clip = os.path.join(RAW, 'vid4k', f'ta{i}.mp4')
+    if not os.path.exists(clip): clip = os.path.join(RAW, 'vid', f'ta{i}.mp4')
     if os.path.exists(clip):
-        vf = f'scale=1280:720:force_original_aspect_ratio=increase,crop=1280:720,fps={FPS},trim=0:{SEG},setpts=PTS-STARTPTS'
+        vf = f'scale=3840:2160:flags=lanczos:force_original_aspect_ratio=increase,crop=3840:2160,fps={FPS},trim=0:{SEG},setpts=PTS-STARTPTS'
         subprocess.run(['ffmpeg', '-y', '-v', 'error', '-i', clip, '-vf', vf, '-an', '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', out], check=True); echt.append(i)
     else:
         fr = int(SEG * FPS)
-        vf = (f"scale=3840:-2,zoompan=z='1+0.07*on/{fr}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={fr}:s=1280x720:fps={FPS}")
+        vf = (f"scale=5760:-2,zoompan=z='1+0.07*on/{fr}':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d={fr}:s=3840x2160:fps={FPS}")
         subprocess.run(['ffmpeg', '-y', '-v', 'error', '-loop', '1', '-i', os.path.join(RAW, '2k', f'at{i}.png'), '-vf', vf, '-frames:v', str(fr),
                         '-c:v', 'libx264', '-crf', '14', '-pix_fmt', 'yuv420p', out], check=True)
     segs.append(out)
