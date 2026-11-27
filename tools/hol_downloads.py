@@ -6,7 +6,7 @@ from PIL import Image
 D = os.path.expanduser('~/Downloads'); ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 OUT = os.path.join(ROOT, 'assets-roh', 'v3', '2k'); os.makedirs(OUT, exist_ok=True)
 for f in sorted(os.listdir(D)):
-    m = re.search(r'ASTREIN-([A-Z]+\d+)\.', f)
+    m = re.search(r'ASTREIN-([A-Z]+\d+[A-Z]?)\.', f)
     if not m or not f.startswith('dreamina-'): continue
     k = m.group(1).lower(); ext = os.path.splitext(f)[1]
     if ext == '.mp4':
