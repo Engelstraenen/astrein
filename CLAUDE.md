@@ -27,7 +27,8 @@ Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kos
 ## 7. Befehle
 - Vorschau: `python3 tools/serve.py 4397` → http://localhost:4397/ (4381 ist DRSCHIWAGO)
 - Prüfen: `python3 tools/check.py http://localhost:4397/ <ordner> 390x844 stamm:0,einbau:.5` · Handy komplett: `tools/mobil_check.py` (Kapitel-Liste anpassen)
-- Veröffentlichen: `git subtree split --prefix site -b gh-pages && git push -f origin gh-pages` → https://engelstraenen.github.io/astrein/
+- Veröffentlichen: `bash tools/publish.sh` (gh-pages per commit-tree, nie subtree split) → https://engelstraenen.github.io/astrein/
+- Filme: Dreamina-Clip → `tools/hol_downloads.py` → `tools/ff_check.py <id>` → `tools/upscale_queue.py <id>` (4K, wartet auf GPU) → `tools/video3.py assets-roh/v3/vid4k/<id>.mp4 <key>` bzw. Tag-Stationen `tools/tagfilm.py` (tag1…tag9) → `tools/assets3.py`. Keine Datei > 100 MB (`find site -size +90M`).
 
 ## 8. Offene Fragen
 - keine (A2 bestätigt). Nächste Freigabe: Startbilder ASF1–ASF7, ASS1–2.
@@ -44,6 +45,9 @@ Storyboard-Wahl (Eugen) → First Frames 4K je Film-Kapitel → Video-Drafts kos
 - 26.11.2026 (Eugen): Kompletter Neubau nach V2.79. Beruf cool verkaufen, cooles Team, Karriere-Unterpunkt mit Vorteilen Azubi + Fachkraft und offenem Lohn. 3 Storyboards V3 in konzepte/v3/ (Schichtuhr, Schublade, Crew).
 
 - 26.11.2026 (Eugen): Hauptseite = Storyboard 2 „Die Schublade“ (Bordeaux + Creme = CI), ausbauen. Unterseite „Ein Tag bei uns“ = Storyboard 1 Schichtuhr (in CI-Farben). Neue Unterseite „Was du lernst“ (kein Scrollytelling nötig, Motion-Frames/Videos, cool). Crew (Neon) verworfen: passt nicht zu Tischlern.
+
+- 26.11.2026 (Eugen): Holzproben füllen die Filzfläche, Oberflächen als echte Fotos (15 Kombinationen) statt Filter, Lohn nur einmal (Schubladen-Karten), „Ein Tag bei uns“ im Haupt-CI als Film.
+- 27.11.2026 (Eugen): Furnierpresse neu (Platte schließt ganz) – „top“. Alle Filme auf 4K hochgerechnet (V2.85).
 
 ## 10. Ablage
 Code: Dropbox/CLAUDE/Projekte/ASTREIN · Storyboards: konzepte/
